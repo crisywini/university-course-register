@@ -23,7 +23,6 @@ public class User implements Serializable {
     @Column(name = "marital_status")
     @Enumerated
     private MaritalStatus maritalStatus;
-
     @ManyToMany(mappedBy = "users")
     @Column(name = "course_subjects")
     private List<CourseSubject> courseSubjects;

@@ -14,6 +14,7 @@ public class CourseSubject implements Serializable {
     @Column(name = "teacher_name")
     private String teacherName;
     private String description;
+    @Lob
     private String syllabus;
     private int quota;
     @Column(name = "pensum_code")
