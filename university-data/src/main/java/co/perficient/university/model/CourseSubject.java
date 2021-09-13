@@ -1,9 +1,6 @@
 package co.perficient.university.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,14 +11,19 @@ public class CourseSubject implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "teacher_name")
     private String teacherName;
     private String description;
     private String syllabus;
     private int quota;
+    @Column(name = "pensum_code")
     private int pensumCode;
+    @Column(name = "academic_program_code")
     private int academicProgramCode;
     private String group;
+    @ManyToOne
     private Course course;
+    @ManyToMany
     private List<User> users;
 
     public CourseSubject() {

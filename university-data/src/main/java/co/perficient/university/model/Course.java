@@ -1,17 +1,19 @@
 package co.perficient.university.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
+
 @Entity
 public class Course implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
+    @Column(name = "course_subjects")
+    @OneToMany(mappedBy = "course")
     private Set<CourseSubject> courseSubjects;
 
     public Course() {

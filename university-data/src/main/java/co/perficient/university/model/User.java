@@ -1,19 +1,31 @@
 package co.perficient.university.model;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 public class User implements Serializable {
+
+    @Id
     private String id;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
+    @Enumerated
     private Gender gender;
+    @Enumerated
     private Nationality nationality;
+    @Column(name = "marital_status")
+    @Enumerated
     private MaritalStatus maritalStatus;
+
+    @ManyToMany(mappedBy = "users")
+    @Column(name = "course_subjects")
     private List<CourseSubject> courseSubjects;
 
     public User() {

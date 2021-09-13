@@ -1,9 +1,6 @@
 package co.perficient.university.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 @Entity
 public class DaySchedule implements Serializable {
@@ -12,20 +9,23 @@ public class DaySchedule implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    private int start_hour;
-    private int end_hour;
-    private String classRoom;
+    @Column(name = "start_hour")
+    private int startHour;
+    @Column(name = "end_hour")
+    private int endHour;
+    private String classroom;
+    @ManyToOne
     private Schedule schedule;
 
 
     public DaySchedule() {
     }
 
-    public DaySchedule(Schedule schedule, String name, int start_hour, int end_hour, String classRoom) {
+    public DaySchedule(Schedule schedule, String name, int startHour, int endHour, String classRoom) {
         this.name = name;
-        this.start_hour = start_hour;
-        this.end_hour = end_hour;
-        this.classRoom = classRoom;
+        this.startHour = startHour;
+        this.endHour = endHour;
+        this.classroom = classRoom;
         this.schedule = schedule;
     }
 
@@ -53,27 +53,27 @@ public class DaySchedule implements Serializable {
         this.name = name;
     }
 
-    public int getStart_hour() {
-        return start_hour;
+    public int getStartHour() {
+        return startHour;
     }
 
-    public void setStart_hour(int start_hour) {
-        this.start_hour = start_hour;
+    public void setStartHour(int startHour) {
+        this.startHour = startHour;
     }
 
-    public int getEnd_hour() {
-        return end_hour;
+    public int getEndHour() {
+        return endHour;
     }
 
-    public void setEnd_hour(int end_hour) {
-        this.end_hour = end_hour;
+    public void setEndHour(int endHour) {
+        this.endHour = endHour;
     }
 
-    public String getClassRoom() {
-        return classRoom;
+    public String getClassroom() {
+        return classroom;
     }
 
-    public void setClassRoom(String classRoom) {
-        this.classRoom = classRoom;
+    public void setClassroom(String classroom) {
+        this.classroom = classroom;
     }
 }
