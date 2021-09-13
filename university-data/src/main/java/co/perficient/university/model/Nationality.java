@@ -8,5 +8,6 @@ public enum Nationality {
     CAMEROONIAN,
     FRENCH,
     GERMAN,
-    GREEK;
+    GREEK,
+    DANISH;
 }
