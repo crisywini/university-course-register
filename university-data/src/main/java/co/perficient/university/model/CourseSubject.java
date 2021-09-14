@@ -10,7 +10,7 @@ public class CourseSubject implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "teacher_name")
     private String teacherName;
     private String description;
@@ -50,11 +50,11 @@ public class CourseSubject implements Serializable {
         this.users = users;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

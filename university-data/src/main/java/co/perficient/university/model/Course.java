@@ -1,7 +1,5 @@
 package co.perficient.university.model;
 
-import org.springframework.data.annotation.PersistenceConstructor;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -10,7 +8,7 @@ import java.util.Set;
 public class Course implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
     @Column(name = "course_subjects")
     @OneToMany(mappedBy = "course")
@@ -32,11 +30,11 @@ public class Course implements Serializable {
         this.courseSubjects = courseSubjects;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
