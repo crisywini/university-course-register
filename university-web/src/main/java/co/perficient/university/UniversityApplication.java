@@ -8,12 +8,13 @@ import org.springframework.context.ApplicationContext;
 @SpringBootApplication
 public class UniversityApplication {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		ApplicationContext run = SpringApplication.run(UniversityApplication.class, args);
+        //ApplicationContext run = SpringApplication.run(UniversityApplication.class, args);
+        SpringApplication.run(UniversityApplication.class, args);
 
-		Course course = (Course) run.getBean("course");
-		System.out.println(course);
-	}
+        //Course course = (Course) run.getBean("course");
+        //System.out.println(course);
+    }
 
 }
