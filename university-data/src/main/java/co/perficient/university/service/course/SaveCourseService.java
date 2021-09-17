@@ -1,4 +1,4 @@
-package co.perficient.university.service;
+package co.perficient.university.service.course;
 
 import co.perficient.university.model.Course;
 import co.perficient.university.port.CourseService;
