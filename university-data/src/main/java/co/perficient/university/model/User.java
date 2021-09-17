@@ -10,30 +10,41 @@ public class User implements Serializable {
 
     @Id
     private String id;
+
     @Column(name = "first_name")
     private String firstName;
+
     @Column(name = "last_name")
     private String lastName;
+
+    @Column(unique = true)
+    private String email;
+
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
+
     @Enumerated
     private Gender gender;
+
     @Enumerated
     private Nationality nationality;
+
     @Column(name = "marital_status")
     @Enumerated
     private MaritalStatus maritalStatus;
+
     @ManyToMany(mappedBy = "users")
-    @Column(name = "course_subjects")
+    @Column(name = "course_subjects", unique = true)
     private List<CourseSubject> courseSubjects;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, LocalDate dateOfBirth, Gender gender,
-                Nationality nationality, MaritalStatus maritalStatus) {
+    public User(String firstName, String lastName, String email, LocalDate dateOfBirth,
+                Gender gender, Nationality nationality, MaritalStatus maritalStatus) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.nationality = nationality;
@@ -102,5 +113,13 @@ public class User implements Serializable {
 
     public void setMaritalStatus(MaritalStatus maritalStatus) {
         this.maritalStatus = maritalStatus;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

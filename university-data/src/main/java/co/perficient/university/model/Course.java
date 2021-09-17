@@ -9,7 +9,9 @@ public class Course implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     @Column(name = "course_subjects")
     @OneToMany(mappedBy = "course")
     private Set<CourseSubject> courseSubjects;
