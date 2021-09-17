@@ -4,12 +4,12 @@ import co.perficient.university.port.CourseService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class deleteByIdCourseService {
+public class deleteCourseByIdService {
 
     private final CourseService courseService;
     private static final String NON_EXISTING_COURSE_MESSAGE = "The course does not exists!";
 
-    public deleteByIdCourseService(CourseService courseService) {
+    public deleteCourseByIdService(CourseService courseService) {
         this.courseService = courseService;
     }
 

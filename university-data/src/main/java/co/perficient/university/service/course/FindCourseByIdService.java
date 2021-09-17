@@ -5,11 +5,11 @@ import co.perficient.university.port.CourseService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FindByIdCourseService {
+public class FindCourseByIdService {
 
     private final CourseService courseService;
 
-    public FindByIdCourseService(CourseService courseService) {
+    public FindCourseByIdService(CourseService courseService) {
         this.courseService = courseService;
     }
 
