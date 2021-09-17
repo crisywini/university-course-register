@@ -15,11 +15,11 @@ public class DeleteDayService {
     }
 
     public void delete(DaySchedule daySchedule) {
-        validateExistingCourse(daySchedule);
+        validateExisting(daySchedule);
         dayScheduleService.delete(daySchedule);
     }
 
-    private void validateExistingCourse(DaySchedule daySchedule) {
+    private void validateExisting(DaySchedule daySchedule) {
         if (dayScheduleService.findById(daySchedule.getId()) == null) {
             throw new RuntimeException(NON_EXISTING_DAY_SCHEDULE_MESSAGE);
         }

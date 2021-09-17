@@ -15,11 +15,11 @@ public class DeleteCourseSubjectService {
     }
 
     public void delete(CourseSubject courseSubject) {
-        validateExistingCourse(courseSubject);
+        validateExisting(courseSubject);
         courseSubjectService.delete(courseSubject);
     }
 
-    private void validateExistingCourse(CourseSubject courseSubject) {
+    private void validateExisting(CourseSubject courseSubject) {
         if (courseSubjectService.findById(courseSubject.getId()) == null) {
             throw new RuntimeException(NON_EXISTING_COURSE_SUBJECT_MESSAGE);
         }

@@ -14,11 +14,11 @@ public class deleteCourseByIdService {
     }
 
     public void deleteById(Long id) {
-        validateExistingCourse(id);
+        validateExisting(id);
         courseService.deleteById(id);
     }
 
-    private void validateExistingCourse(Long id) {
+    private void validateExisting(Long id) {
         if (courseService.findById(id) == null) {
             throw new RuntimeException(NON_EXISTING_COURSE_MESSAGE);
         }

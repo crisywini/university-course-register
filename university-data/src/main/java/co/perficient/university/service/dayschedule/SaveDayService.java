@@ -1,27 +1,30 @@
 package co.perficient.university.service.dayschedule;
 
 import co.perficient.university.model.CourseSubject;
+import co.perficient.university.model.DaySchedule;
 import co.perficient.university.port.CourseSubjectService;
+import co.perficient.university.port.DayScheduleService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SaveDayService {
 
-    private final CourseSubjectService courseSubjectService;
-    private static final String COURSE_SUBJECT_REPEATED_MESSAGE = "The course subject already exists!";
+    private final DayScheduleService dayScheduleService;
 
-    public SaveDayService(CourseSubjectService courseSubjectService) {
-        this.courseSubjectService = courseSubjectService;
+    private static final String DAY_REPEATED_MESSAGE = "The day already exists!";
+    public SaveDayService(DayScheduleService dayScheduleService) {
+        this.dayScheduleService = dayScheduleService;
     }
 
-    public CourseSubject save(CourseSubject courseSubject) {
-        validateNonRepeated(courseSubject);
-        return courseSubjectService.save(courseSubject);
+
+    public DaySchedule save(DaySchedule daySchedule) {
+        validateNonRepeated(daySchedule);
+        return dayScheduleService.save(daySchedule);
     }
 
-    private void validateNonRepeated(CourseSubject courseSubject) {
-        if (courseSubjectService.findById(courseSubject.getId()) != null) {
-            throw new RuntimeException(COURSE_SUBJECT_REPEATED_MESSAGE);
+    private void validateNonRepeated(DaySchedule courseSubject) {
+        if (dayScheduleService.findById(courseSubject.getId()) != null) {
+            throw new RuntimeException(DAY_REPEATED_MESSAGE);
         }
     }
 

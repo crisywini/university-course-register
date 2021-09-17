@@ -14,11 +14,11 @@ public class DeleteDayByIdService {
     }
 
     public void deleteById(Long id) {
-        validateExistingCourse(id);
+        validateExisting(id);
         dayScheduleService.deleteById(id);
     }
 
-    private void validateExistingCourse(Long id) {
+    private void validateExisting(Long id) {
         if (dayScheduleService.findById(id) == null) {
             throw new RuntimeException(NON_EXISTING_DAY_SCHEDULE_MESSAGE);
         }
