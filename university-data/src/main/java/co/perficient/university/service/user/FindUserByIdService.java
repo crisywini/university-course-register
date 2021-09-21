@@ -1,17 +1,15 @@
 package co.perficient.university.service.user;
 
-import co.perficient.university.model.Schedule;
 import co.perficient.university.model.User;
-import co.perficient.university.port.ScheduleService;
-import co.perficient.university.port.UserService;
+import co.perficient.university.port.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class FindUserByIdService {
 
-    private final UserService userService;
+    private final UserRepository userService;
 
-    public FindUserByIdService(UserService userService) {
+    public FindUserByIdService(UserRepository userService) {
         this.userService = userService;
     }
 

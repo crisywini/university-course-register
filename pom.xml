@@ -19,6 +19,7 @@
 	<name>university</name>
 	<description>This project allows to save academic courses of college students</description>
 	<properties>
+		<start-class>co.perficient.university.UniversityApplication</start-class>
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>

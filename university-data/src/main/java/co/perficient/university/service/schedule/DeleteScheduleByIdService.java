@@ -1,15 +1,15 @@
 package co.perficient.university.service.schedule;
 
-import co.perficient.university.port.ScheduleService;
+import co.perficient.university.port.ScheduleRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DeleteScheduleByIdService {
 
-    private final ScheduleService scheduleService;
+    private final ScheduleRepository scheduleService;
     private static final String NON_EXISTING_SCHEDULE_MESSAGE = "The schedule does not exists!";
 
-    public DeleteScheduleByIdService( ScheduleService scheduleService) {
+    public DeleteScheduleByIdService( ScheduleRepository scheduleService) {
         this.scheduleService = scheduleService;
     }
 

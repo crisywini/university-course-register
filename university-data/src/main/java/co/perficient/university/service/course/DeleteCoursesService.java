@@ -1,26 +1,26 @@
 package co.perficient.university.service.course;
 
 import co.perficient.university.model.Course;
-import co.perficient.university.port.CourseService;
+import co.perficient.university.port.CourseRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class deleteCoursesService {
+public class DeleteCoursesService {
 
-    private final CourseService courseService;
+    private final CourseRepository courseRepository;
     private static final String NON_EXISTING_COURSE_MESSAGE = "The course does not exists!";
 
-    public deleteCoursesService(CourseService courseService) {
-        this.courseService = courseService;
+    public DeleteCoursesService(CourseRepository courseRepository) {
+        this.courseRepository = courseRepository;
     }
 
     public void delete(Course course) {
         validateExisting(course);
-        courseService.delete(course);
+        courseRepository.delete(course);
     }
 
     private void validateExisting(Course course) {
-        if (courseService.findById(course.getId()) == null) {
+        if (courseRepository.findById(course.getId()) == null) {
             throw new RuntimeException(NON_EXISTING_COURSE_MESSAGE);
         }
     }

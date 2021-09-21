@@ -2,7 +2,7 @@ package co.perficient.university.service.course;
 
 
 import co.perficient.university.model.Course;
-import co.perficient.university.port.CourseService;
+import co.perficient.university.port.CourseRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -10,15 +10,15 @@ import java.util.Set;
 @Service
 public class FindAllCoursesService {
 
-    private final CourseService courseService;
+    private final CourseRepository courseRepository;
 
-    public FindAllCoursesService(CourseService courseService) {
-        this.courseService = courseService;
+    public FindAllCoursesService(CourseRepository courseRepository) {
+        this.courseRepository = courseRepository;
     }
 
 
     public Set<Course> findAll() {
-        return courseService.findAll();
+        return courseRepository.findAll();
     }
 
 

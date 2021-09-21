@@ -1,10 +1,8 @@
 package co.perficient.university.service.schedule;
 
 
-import co.perficient.university.model.DaySchedule;
 import co.perficient.university.model.Schedule;
-import co.perficient.university.port.DayScheduleService;
-import co.perficient.university.port.ScheduleService;
+import co.perficient.university.port.ScheduleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -12,9 +10,9 @@ import java.util.Set;
 @Service
 public class FindAllSchedulesService {
 
-    private final ScheduleService scheduleService;
+    private final ScheduleRepository scheduleService;
 
-    public FindAllSchedulesService( ScheduleService scheduleService) {
+    public FindAllSchedulesService( ScheduleRepository scheduleService) {
         this.scheduleService = scheduleService;
     }
 

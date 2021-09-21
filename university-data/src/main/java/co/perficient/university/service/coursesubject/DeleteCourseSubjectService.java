@@ -1,16 +1,16 @@
 package co.perficient.university.service.coursesubject;
 
 import co.perficient.university.model.CourseSubject;
-import co.perficient.university.port.CourseSubjectService;
+import co.perficient.university.port.CourseSubjectRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DeleteCourseSubjectService {
 
-    private final CourseSubjectService courseSubjectService;
+    private final CourseSubjectRepository courseSubjectService;
     private static final String NON_EXISTING_COURSE_SUBJECT_MESSAGE = "The course subject does not exists!";
 
-    public DeleteCourseSubjectService(CourseSubjectService courseSubjectService) {
+    public DeleteCourseSubjectService(CourseSubjectRepository courseSubjectService) {
         this.courseSubjectService = courseSubjectService;
     }
 

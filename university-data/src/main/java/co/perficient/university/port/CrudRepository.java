@@ -1,8 +1,11 @@
 package co.perficient.university.port;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.Set;
 
-public interface CrudService<T, IDT>{
+@Repository
+public interface CrudRepository<T, IDT> {
 
     Set<T> findAll();
 

@@ -1,19 +1,17 @@
 package co.perficient.university.service.schedule;
 
-import co.perficient.university.model.CourseSubject;
 import co.perficient.university.model.Schedule;
-import co.perficient.university.port.CourseSubjectService;
-import co.perficient.university.port.ScheduleService;
+import co.perficient.university.port.ScheduleRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SaveScheduleService {
 
-    private final ScheduleService scheduleService;
+    private final ScheduleRepository scheduleService;
 
     private static final String SCHEDULE_REPEATED_MESSAGE = "The schedule already exists!";
 
-    public SaveScheduleService(ScheduleService scheduleService) {
+    public SaveScheduleService(ScheduleRepository scheduleService) {
         this.scheduleService = scheduleService;
     }
 

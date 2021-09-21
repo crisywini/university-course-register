@@ -1,16 +1,16 @@
 package co.perficient.university.service.coursesubject;
 
 import co.perficient.university.model.CourseSubject;
-import co.perficient.university.port.CourseSubjectService;
+import co.perficient.university.port.CourseSubjectRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SaveCourseSubjectService {
 
-    private final CourseSubjectService courseSubjectService;
+    private final CourseSubjectRepository courseSubjectService;
     private static final String COURSE_SUBJECT_REPEATED_MESSAGE = "The course subject already exists!";
 
-    public SaveCourseSubjectService(CourseSubjectService courseSubjectService) {
+    public SaveCourseSubjectService(CourseSubjectRepository courseSubjectService) {
         this.courseSubjectService = courseSubjectService;
     }
 

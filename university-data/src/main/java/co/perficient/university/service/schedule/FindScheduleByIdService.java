@@ -1,17 +1,15 @@
 package co.perficient.university.service.schedule;
 
-import co.perficient.university.model.DaySchedule;
 import co.perficient.university.model.Schedule;
-import co.perficient.university.port.DayScheduleService;
-import co.perficient.university.port.ScheduleService;
+import co.perficient.university.port.ScheduleRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class FindScheduleByIdService {
 
-    private final ScheduleService scheduleService;
+    private final ScheduleRepository scheduleService;
 
-    public FindScheduleByIdService(ScheduleService scheduleService) {
+    public FindScheduleByIdService(ScheduleRepository scheduleService) {
         this.scheduleService = scheduleService;
     }
 

@@ -1,10 +1,8 @@
 package co.perficient.university.service.user;
 
 
-import co.perficient.university.model.Schedule;
 import co.perficient.university.model.User;
-import co.perficient.university.port.ScheduleService;
-import co.perficient.university.port.UserService;
+import co.perficient.university.port.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -12,9 +10,9 @@ import java.util.Set;
 @Service
 public class FindAllUsersService {
 
-    private final UserService userService;
+    private final UserRepository userService;
 
-    public FindAllUsersService(UserService userService) {
+    public FindAllUsersService(UserRepository userService) {
         this.userService = userService;
     }
 
