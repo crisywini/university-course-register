@@ -1,10 +1,17 @@
 package co.perficient.university.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class User implements Serializable {
 
@@ -37,9 +44,6 @@ public class User implements Serializable {
     @Column(name = "course_subjects", unique = true)
     private List<CourseSubject> courseSubjects;
 
-    public User() {
-    }
-
     public User(String firstName, String lastName, String email, LocalDate dateOfBirth,
                 Gender gender, Nationality nationality, MaritalStatus maritalStatus) {
         this.firstName = firstName;
@@ -51,75 +55,4 @@ public class User implements Serializable {
         this.maritalStatus = maritalStatus;
     }
 
-    public List<CourseSubject> getCourseSubjects() {
-        return courseSubjects;
-    }
-
-    public void setCourseSubjects(List<CourseSubject> courseSubjects) {
-        this.courseSubjects = courseSubjects;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public Nationality getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(Nationality nationality) {
-        this.nationality = nationality;
-    }
-
-    public MaritalStatus getMaritalStatus() {
-        return maritalStatus;
-    }
-
-    public void setMaritalStatus(MaritalStatus maritalStatus) {
-        this.maritalStatus = maritalStatus;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }

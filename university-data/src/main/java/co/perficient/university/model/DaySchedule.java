@@ -1,7 +1,15 @@
 package co.perficient.university.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class DaySchedule implements Serializable {
 
@@ -17,63 +25,4 @@ public class DaySchedule implements Serializable {
     @ManyToOne
     private Schedule schedule;
 
-
-    public DaySchedule() {
-    }
-
-    public DaySchedule(Schedule schedule, String name, int startHour, int endHour, String classRoom) {
-        this.name = name;
-        this.startHour = startHour;
-        this.endHour = endHour;
-        this.classroom = classRoom;
-        this.schedule = schedule;
-    }
-
-    public Schedule getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(Schedule schedule) {
-        this.schedule = schedule;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getStartHour() {
-        return startHour;
-    }
-
-    public void setStartHour(int startHour) {
-        this.startHour = startHour;
-    }
-
-    public int getEndHour() {
-        return endHour;
-    }
-
-    public void setEndHour(int endHour) {
-        this.endHour = endHour;
-    }
-
-    public String getClassroom() {
-        return classroom;
-    }
-
-    public void setClassroom(String classroom) {
-        this.classroom = classroom;
-    }
 }

@@ -1,9 +1,16 @@
 package co.perficient.university.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Course implements Serializable {
     @Id
@@ -16,35 +23,4 @@ public class Course implements Serializable {
     @OneToMany(mappedBy = "course")
     private Set<CourseSubject> courseSubjects;
 
-    public Course() {
-    }
-
-    public Course(String name, Set<CourseSubject> courseSubjects) {
-        this.name = name;
-        this.courseSubjects = courseSubjects;
-    }
-
-    public Set<CourseSubject> getCourseSubjects() {
-        return courseSubjects;
-    }
-
-    public void setCourseSubjects(Set<CourseSubject> courseSubjects) {
-        this.courseSubjects = courseSubjects;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
