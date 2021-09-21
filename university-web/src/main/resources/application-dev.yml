@@ -1,3 +1,8 @@
 crisi:
   username: Crisidev
   password: Crisipassword
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/university_dev
+    username: postgres
+    password: root

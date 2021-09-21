@@ -1,3 +1,6 @@
 spring:
   profiles:
     active: EN,dev
+  jpa:
+    hibernate:
+      ddl-auto: create-drop

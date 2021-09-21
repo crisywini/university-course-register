@@ -27,6 +27,7 @@ public class CourseSubject implements Serializable {
     private int pensumCode;
     @Column(name = "academic_program_code")
     private int academicProgramCode;
+    @Column(name = "group_course")
     private String group;
     @ManyToOne
     private Course course;
