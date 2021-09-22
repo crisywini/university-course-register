@@ -13,12 +13,32 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 public class Course implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(nullable = false)
     private String name;
-
+    @Column(nullable = false)
+    private String title;
+    @Enumerated
+    @Column(name = "academic_level", nullable = false)
+    private AcademicLevel academicLevel;
+    @Enumerated
+    @Column(nullable = false)
+    private Faculty faculty;
+    @Enumerated
+    @Column(nullable = false)
+    private Modality modality;
+    @Column(name = "total_academic_credits", nullable = false)
+    private int totalAcademicCredits;
+    @Column(name = "qualified_registration", nullable = false)
+    private String qualifiedRegistration;
+    @Column(name = "high_quality_accreditation")
+    private String highQualityAccreditation;
+    @Enumerated
+    @Column(nullable = false)
+    private EducationLevel educationLevel;
     @Column(name = "course_subjects")
     @OneToMany(mappedBy = "course")
     private Set<CourseSubject> courseSubjects;

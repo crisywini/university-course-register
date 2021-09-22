@@ -25,8 +25,8 @@ public class CourseSubject implements Serializable {
     private int quota;
     @Column(name = "pensum_code")
     private int pensumCode;
-    @Column(name = "academic_program_code")
-    private int academicProgramCode;
+    /*@Column(name = "academic_program_code")
+    private int academicProgramCode;*/
     @Column(name = "group_course")
     private String group;
     @ManyToOne
