@@ -2,11 +2,13 @@ package co.perficient.university.adapter;
 
 import co.perficient.university.adapter.jparepositories.UserJPARepository;
 import co.perficient.university.model.User;
+import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.port.UserRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -17,8 +19,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Set<User> findAll() {
-        return new HashSet<>(userJPARepository.findAll());
+    public Set<UserDto> findAll() {
+        return userJPARepository.findAll()
+                .stream()
+                .map(u -> new UserDto(u.getId(), u.getEmail(), u.getFirstName(), u.getLastName()))
+                .collect(Collectors.toSet());
     }
 
     @Override

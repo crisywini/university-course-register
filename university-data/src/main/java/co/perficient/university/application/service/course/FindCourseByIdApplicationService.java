@@ -2,7 +2,9 @@ package co.perficient.university.application.service.course;
 
 import co.perficient.university.model.Course;
 import co.perficient.university.service.course.FindCourseByIdService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class FindCourseByIdApplicationService {
 
     private final FindCourseByIdService findCourseByIdService;

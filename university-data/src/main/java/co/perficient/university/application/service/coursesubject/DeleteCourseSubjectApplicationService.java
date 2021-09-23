@@ -2,7 +2,9 @@ package co.perficient.university.application.service.coursesubject;
 
 import co.perficient.university.model.CourseSubject;
 import co.perficient.university.service.coursesubject.DeleteCourseSubjectService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DeleteCourseSubjectApplicationService {
     private final DeleteCourseSubjectService deleteCourseSubjectService;
 

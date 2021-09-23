@@ -7,8 +7,6 @@ import java.util.Set;
 @Repository
 public interface CrudRepository<T, IDT> {
 
-    Set<T> findAll();
-
     T findById(IDT id);
 
     T save(T object);
