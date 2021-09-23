@@ -32,15 +32,27 @@ public class Course implements Serializable {
     private Modality modality;
     @Column(name = "total_academic_credits", nullable = false)
     private int totalAcademicCredits;
-    @Column(name = "qualified_registration", nullable = false)
-    private String qualifiedRegistration;
-    @Column(name = "high_quality_accreditation")
-    private String highQualityAccreditation;
     @Enumerated
     @Column(nullable = false)
     private EducationLevel educationLevel;
     @Column(name = "course_subjects")
     @OneToMany(mappedBy = "course")
     private Set<CourseSubject> courseSubjects;
+    //@Column(name = "qualified_registration", nullable = false)
+    //private String qualifiedRegistration;
+    //@Column(name = "high_quality_accreditation")
+    //private String highQualityAccreditation;
 
+
+    public Course(String name, String title, AcademicLevel academicLevel,
+                  Faculty faculty, Modality modality, int totalAcademicCredits,
+                  EducationLevel educationLevel) {
+        this.name = name;
+        this.title = title;
+        this.academicLevel = academicLevel;
+        this.faculty = faculty;
+        this.modality = modality;
+        this.totalAcademicCredits = totalAcademicCredits;
+        this.educationLevel = educationLevel;
+    }
 }

@@ -25,5 +25,7 @@ public class Schedule implements Serializable {
     @Column(name = "day_schedules")
     @OneToMany(mappedBy = "schedule")
     private Set<DaySchedule> daySchedules;
+    @OneToOne(mappedBy = "schedule")
+    private CourseSubject courseSubject;
 
 }

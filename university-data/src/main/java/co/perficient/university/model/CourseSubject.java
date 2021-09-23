@@ -17,8 +17,8 @@ public class CourseSubject implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "teacher_name")
-    private String teacherName;
+    //@Column(name = "teacher_name")
+    //private String teacherName;
     private String description;
     @Lob
     private String syllabus;
@@ -33,5 +33,8 @@ public class CourseSubject implements Serializable {
     private Course course;
     @ManyToMany
     private List<User> users;
+    @OneToOne
+    private Schedule schedule;
+
 
 }

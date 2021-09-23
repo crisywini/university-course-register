@@ -17,42 +17,34 @@ public class User implements Serializable {
 
     @Id
     private String id;
-
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
-
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
-
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
-
-    @Column(name = "date_of_birth")
+    @Column(nullable = false)
+    private String password;
+    @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
-
     @Enumerated
     private Gender gender;
-
-    @Enumerated
-    private Nationality nationality;
-
-    @Column(name = "marital_status")
-    @Enumerated
-    private MaritalStatus maritalStatus;
-
     @ManyToMany(mappedBy = "users")
     @Column(name = "course_subjects", unique = true)
     private List<CourseSubject> courseSubjects;
 
-    public User(String firstName, String lastName, String email, LocalDate dateOfBirth,
-                Gender gender, Nationality nationality, MaritalStatus maritalStatus) {
+    //@Enumerated
+    //private Nationality nationality;
+    //@Column(name = "marital_status")
+    //@Enumerated
+    //private MaritalStatus maritalStatus;
+
+    public User(String firstName, String lastName, String email, LocalDate dateOfBirth, Gender gender) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
-        this.nationality = nationality;
-        this.maritalStatus = maritalStatus;
     }
 
 }
