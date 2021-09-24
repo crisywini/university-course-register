@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping({"/course/course_subject", "/course_subject"})
+@RequestMapping(path = {"/course/course_subject", "/course_subject"})
 public class CourseSubjectController {
     private final SaveCourseSubjectApplicationService saveCourseSubjectApplicationService;
     private final FindCourseSubjectByIdApplicationService findCourseSubjectByIdApplicationService;
@@ -27,27 +27,27 @@ public class CourseSubjectController {
         this.deleteCourseSubjectByIdApplicationService = deleteCourseSubjectByIdApplicationService;
     }
 
-    @PostMapping
+    @PostMapping(consumes = "application/json")
     public void save(@RequestBody CourseSubject courseSubject) {
         saveCourseSubjectApplicationService.run(courseSubject);
     }
 
-    @GetMapping("/course/course_subject/{id}")
+    @GetMapping
     public CourseSubject findById(@RequestParam(name = "id") Long id) {
         return findCourseSubjectByIdApplicationService.run(id);
     }
 
-    @GetMapping
+    @GetMapping("/courses")
     public Set<CourseSubject> findAll() {
         return findAllCourseSubjectsApplicationService.run();
     }
 
-    @DeleteMapping("/course/course_subject/{id}")
+    @DeleteMapping
     public void deleteById(@RequestParam(name = "id") Long id) {
         deleteCourseSubjectByIdApplicationService.run(id);
     }
 
-    @DeleteMapping("/course/course_subject/{courseSubject}")
+    @DeleteMapping("/course")
     public void delete(@RequestBody CourseSubject courseSubject) {
         deleteCourseSubjectApplicationService.run(courseSubject);
     }

@@ -1,5 +1,6 @@
 package co.perficient.university.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String password;
     @Column(name = "date_of_birth", nullable = false)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
     @Enumerated
     private Gender gender;

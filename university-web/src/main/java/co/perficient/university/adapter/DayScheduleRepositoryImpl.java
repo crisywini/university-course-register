@@ -25,7 +25,7 @@ public class DayScheduleRepositoryImpl implements DayScheduleRepository {
 
     @Override
     public DaySchedule findById(Long id) {
-        return dayScheduleJPARepository.findById(id).orElse(new DaySchedule());
+        return dayScheduleJPARepository.findById(id).orElse(null);
     }
 
     @Override

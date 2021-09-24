@@ -30,7 +30,7 @@ public class CourseController {
     }
 
 
-    @PostMapping
+    @PostMapping(consumes = "application/json")
     public void save(@RequestBody Course course) {
 
         saveCourseApplicationService.run(course);
@@ -46,12 +46,12 @@ public class CourseController {
         return findCourseByIdApplicationService.run(id);
     }
 
-    @DeleteMapping("/course/{course}")
+    @DeleteMapping("/course")
     public void delete(@RequestBody Course course) {
         deleteCourseApplicationService.run(course);
     }
 
-    @DeleteMapping("/course/{id}")
+    @DeleteMapping
     public void deleteById(@RequestParam(name = "id") Long id) {
         deleteCourseByIdApplicationService.run(id);
     }

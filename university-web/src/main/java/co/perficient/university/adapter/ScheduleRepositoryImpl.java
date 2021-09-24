@@ -24,7 +24,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
 
     @Override
     public Schedule findById(Long id) {
-        return scheduleJPARepository.findById(id).orElse(new Schedule());
+        return scheduleJPARepository.findById(id).orElse(null);
     }
 
     @Override

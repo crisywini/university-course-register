@@ -24,7 +24,7 @@ public class CourseSubjectRepositoryImpl implements CourseSubjectRepository {
 
     @Override
     public CourseSubject findById(Long id) {
-        return courseSubjectJPARepository.findById(id).orElse(new CourseSubject());
+        return courseSubjectJPARepository.findById(id).orElse(null);
     }
 
     @Override

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/user/")
+@RequestMapping(path = "/user")
 public class UserController {
     private final SaveUserApplicationService saveUserApplicationService;
     private final DeleteUserApplicationService deleteUserApplicationService;
@@ -29,7 +29,7 @@ public class UserController {
         this.findAllUsersApplicationService = findAllUsersApplicationService;
     }
 
-    @PostMapping
+    @PostMapping(consumes = "application/json")
     public void save(@RequestBody User user) {
         saveUserApplicationService.run(user);
     }
@@ -44,12 +44,12 @@ public class UserController {
         return findUserByIdApplicationService.run(id);
     }
 
-    @DeleteMapping("/user/{user}")
+    @DeleteMapping("/user")
     public void delete(@RequestBody User user) {
         deleteUserApplicationService.run(user);
     }
 
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping
     public void deleteById(@RequestParam(name = "id") String id) {
         deleteUserByIdApplicationService.run(id);
     }

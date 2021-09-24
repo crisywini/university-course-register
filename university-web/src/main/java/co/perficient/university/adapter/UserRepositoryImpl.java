@@ -28,7 +28,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findById(String id) {
-        return userJPARepository.findById(id).orElse(new User());
+        return userJPARepository.findById(id).orElse(null);
     }
 
     @Override
