@@ -32,7 +32,6 @@ public class CourseController {
 
     @PostMapping(consumes = "application/json")
     public void save(@RequestBody Course course) {
-
         saveCourseApplicationService.run(course);
     }
 

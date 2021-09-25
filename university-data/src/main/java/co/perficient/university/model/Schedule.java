@@ -2,6 +2,7 @@ package co.perficient.university.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -9,14 +10,16 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
 
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Schedule implements Serializable {
+public class Schedule extends BaseEntity<Schedule> implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private long id;
     @Column(name = "start_date")
     private LocalDate startDate;
@@ -28,4 +31,12 @@ public class Schedule implements Serializable {
     @OneToOne(mappedBy = "schedule")
     private CourseSubject courseSubject;
 
+    @Override
+    public Schedule updateWith(Schedule newItem) {
+        return new Schedule(this.id,
+                newItem.getStartDate(),
+                newItem.getEndDate(),
+                newItem.getDaySchedules(), newItem.getCourseSubject());
+
+    }
 }
