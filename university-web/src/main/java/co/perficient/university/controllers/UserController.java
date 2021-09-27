@@ -16,17 +16,20 @@ public class UserController {
     private final DeleteUserByIdApplicationService deleteUserByIdApplicationService;
     private final FindUserByIdApplicationService findUserByIdApplicationService;
     private final FindAllUsersApplicationService findAllUsersApplicationService;
+    private final UpdateUserApplicationService updateUserApplicationService;
 
     public UserController(SaveUserApplicationService saveUserApplicationService,
                           DeleteUserApplicationService deleteUserApplicationService,
                           DeleteUserByIdApplicationService deleteUserByIdApplicationService,
                           FindUserByIdApplicationService findUserByIdApplicationService,
-                          FindAllUsersApplicationService findAllUsersApplicationService) {
+                          FindAllUsersApplicationService findAllUsersApplicationService,
+                          UpdateUserApplicationService updateUserApplicationService) {
         this.saveUserApplicationService = saveUserApplicationService;
         this.deleteUserApplicationService = deleteUserApplicationService;
         this.deleteUserByIdApplicationService = deleteUserByIdApplicationService;
         this.findUserByIdApplicationService = findUserByIdApplicationService;
         this.findAllUsersApplicationService = findAllUsersApplicationService;
+        this.updateUserApplicationService = updateUserApplicationService;
     }
 
     @PostMapping(consumes = "application/json")
@@ -52,6 +55,12 @@ public class UserController {
     @DeleteMapping
     public void deleteById(@RequestParam(name = "id") String id) {
         deleteUserByIdApplicationService.run(id);
+    }
+
+    @PutMapping
+    public UserDto update(@RequestParam(name = "id") String id,
+                          @RequestBody User newUser) {
+        return updateUserApplicationService.run(id, newUser);
     }
 
 }

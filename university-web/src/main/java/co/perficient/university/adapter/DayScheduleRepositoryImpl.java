@@ -24,6 +24,11 @@ public class DayScheduleRepositoryImpl implements DayScheduleRepository {
     }
 
     @Override
+    public DaySchedule update(Long id, DaySchedule newEntity) {
+        return null;
+    }
+
+    @Override
     public DaySchedule findById(Long id) {
         return dayScheduleJPARepository.findById(id).orElse(null);
     }

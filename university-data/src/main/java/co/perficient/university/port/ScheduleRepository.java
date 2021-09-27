@@ -6,4 +6,5 @@ import java.util.Set;
 
 public interface ScheduleRepository extends CrudRepository<Schedule, Long> {
     Set<Schedule> findAll();
+    Schedule update(Long id, Schedule newEntity);
 }

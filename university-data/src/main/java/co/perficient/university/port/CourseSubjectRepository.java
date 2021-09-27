@@ -8,4 +8,6 @@ import java.util.Set;
 @Repository
 public interface CourseSubjectRepository extends CrudRepository<CourseSubject, Long> {
     Set<CourseSubject> findAll();
+
+    CourseSubject update(Long id, CourseSubject newEntity);
 }

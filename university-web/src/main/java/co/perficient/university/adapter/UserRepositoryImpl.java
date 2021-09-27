@@ -45,4 +45,15 @@ public class UserRepositoryImpl implements UserRepository {
     public void deleteById(String id) {
         userJPARepository.deleteById(id);
     }
+
+    @Override
+    public UserDto update(String id, User newEntity) {
+        User user = findById(id);
+        deleteById(id);
+        User newUser = userJPARepository.save(user.updateWith(newEntity));
+        return new UserDto(newUser.getId(),
+                newUser.getEmail(),
+                newUser.getFirstName(),
+                newUser.getLastName());
+    }
 }

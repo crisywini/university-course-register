@@ -23,6 +23,11 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
     @Override
+    public Schedule update(Long id, Schedule newEntity) {
+        return null;
+    }
+
+    @Override
     public Schedule findById(Long id) {
         return scheduleJPARepository.findById(id).orElse(null);
     }

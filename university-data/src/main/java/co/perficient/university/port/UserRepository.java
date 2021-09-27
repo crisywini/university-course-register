@@ -7,4 +7,6 @@ import java.util.Set;
 
 public interface UserRepository extends CrudRepository<User, String> {
     Set<UserDto> findAll();
+
+    UserDto update(String id, User newEntity);
 }

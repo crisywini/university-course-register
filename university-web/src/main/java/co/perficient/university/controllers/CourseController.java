@@ -16,17 +16,20 @@ public class CourseController {
     private final FindAllCoursesApplicationService findAllCoursesApplicationService;
     private final DeleteCourseByIdApplicationService deleteCourseByIdApplicationService;
     private final DeleteCourseApplicationService deleteCourseApplicationService;
+    private final UpdateCourseApplicationService updateCourseApplicationService;
 
     public CourseController(SaveCourseApplicationService saveCourseApplicationService,
                             FindCourseByIdApplicationService findCourseByIdApplicationService,
                             FindAllCoursesApplicationService findAllCoursesApplicationService,
                             DeleteCourseByIdApplicationService deleteCourseByIdApplicationService,
-                            DeleteCourseApplicationService deleteCourseApplicationService) {
+                            DeleteCourseApplicationService deleteCourseApplicationService,
+                            UpdateCourseApplicationService updateCourseApplicationService) {
         this.saveCourseApplicationService = saveCourseApplicationService;
         this.findCourseByIdApplicationService = findCourseByIdApplicationService;
         this.findAllCoursesApplicationService = findAllCoursesApplicationService;
         this.deleteCourseByIdApplicationService = deleteCourseByIdApplicationService;
         this.deleteCourseApplicationService = deleteCourseApplicationService;
+        this.updateCourseApplicationService = updateCourseApplicationService;
     }
 
 
@@ -55,6 +58,11 @@ public class CourseController {
         deleteCourseByIdApplicationService.run(id);
     }
 
+    @PutMapping
+    public Course update(@RequestParam(name = "id") Long id,
+                         @RequestBody Course course) {
+        return updateCourseApplicationService.run(id, course);
+    }
 
     private String getValue(Map<String, Object> json, String key) {
         return json.get(key).toString();

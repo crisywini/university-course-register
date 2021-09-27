@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class UpdateCourseService {
 
     private final CourseRepository courseRepository;
-    private static final String NON_EXISTING_COURSE_MESSAGE = "The course cannot be updated because, does not exists!";
+    private final String NON_EXISTING_COURSE_MESSAGE = "The course cannot be updated because, does not exists!";
 
     public UpdateCourseService(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;

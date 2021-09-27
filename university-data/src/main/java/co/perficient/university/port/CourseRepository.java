@@ -9,4 +9,5 @@ import java.util.Set;
 public interface CourseRepository extends CrudRepository<Course, Long> {
     Set<Course> findAll();
 
+    Course update(Long id, Course newEntity);
 }

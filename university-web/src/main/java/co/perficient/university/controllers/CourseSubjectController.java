@@ -14,17 +14,20 @@ public class CourseSubjectController {
     private final FindAllCourseSubjectsApplicationService findAllCourseSubjectsApplicationService;
     private final DeleteCourseSubjectApplicationService deleteCourseSubjectApplicationService;
     private final DeleteCourseSubjectByIdApplicationService deleteCourseSubjectByIdApplicationService;
+    private final UpdateCourseSubjectApplicationService updateCourseSubjectApplicationService;
 
     public CourseSubjectController(SaveCourseSubjectApplicationService saveCourseSubjectApplicationService,
                                    FindCourseSubjectByIdApplicationService findCourseSubjectByIdApplicationService,
                                    FindAllCourseSubjectsApplicationService findAllCourseSubjectsApplicationService,
                                    DeleteCourseSubjectApplicationService deleteCourseSubjectApplicationService,
-                                   DeleteCourseSubjectByIdApplicationService deleteCourseSubjectByIdApplicationService) {
+                                   DeleteCourseSubjectByIdApplicationService deleteCourseSubjectByIdApplicationService,
+                                   UpdateCourseSubjectApplicationService updateCourseSubjectApplicationService) {
         this.saveCourseSubjectApplicationService = saveCourseSubjectApplicationService;
         this.findCourseSubjectByIdApplicationService = findCourseSubjectByIdApplicationService;
         this.findAllCourseSubjectsApplicationService = findAllCourseSubjectsApplicationService;
         this.deleteCourseSubjectApplicationService = deleteCourseSubjectApplicationService;
         this.deleteCourseSubjectByIdApplicationService = deleteCourseSubjectByIdApplicationService;
+        this.updateCourseSubjectApplicationService = updateCourseSubjectApplicationService;
     }
 
     @PostMapping(consumes = "application/json")
@@ -50,5 +53,11 @@ public class CourseSubjectController {
     @DeleteMapping("/course")
     public void delete(@RequestBody CourseSubject courseSubject) {
         deleteCourseSubjectApplicationService.run(courseSubject);
+    }
+
+    @PutMapping
+    public CourseSubject update(@RequestParam(name = "id") Long id,
+                                @RequestBody CourseSubject courseSubject) {
+        return updateCourseSubjectApplicationService.run(id, courseSubject);
     }
 }
