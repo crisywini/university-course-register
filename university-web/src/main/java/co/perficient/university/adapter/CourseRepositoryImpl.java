@@ -42,4 +42,11 @@ public class CourseRepositoryImpl implements CourseRepository {
     public void deleteById(Long id) {
         courseJPARepository.deleteById(id);
     }
+
+    @Override
+    public Course update(Long id, Course newEntity) {
+        Course course = findById(id);
+        courseJPARepository.deleteById(id);
+        return courseJPARepository.save(course.updateWith(newEntity));
+    }
 }

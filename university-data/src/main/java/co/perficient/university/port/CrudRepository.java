@@ -15,6 +15,7 @@ public interface CrudRepository<T, IDT> {
 
     void deleteById(IDT id);
 
+    T update(IDT id, T newEntity);
 
 
 }
