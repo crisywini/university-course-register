@@ -1,6 +1,7 @@
 package co.perficient.university.service.schedule;
 
 import co.perficient.university.model.Schedule;
+import co.perficient.university.model.dto.ScheduleDto;
 import co.perficient.university.port.ScheduleRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ public class FindScheduleByIdService {
         this.scheduleService = scheduleService;
     }
 
-    public Schedule findById(Long id) {
+    public ScheduleDto findById(Long id) {
         return scheduleService.findById(id);
     }
 }

@@ -9,22 +9,22 @@ services:
     depends_on:
       - dbpostgresql
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/university
       - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
   dbpostgresql:
-      image: postgres
-      container_name: db
-      ports:
-        - "5432:5432"
-      environment:
-        - POSTGRES_PASSWORD=postgres
-        - POSTGRES_USER=postgres
-        - POSTGRES_DB=postgres
-      healthcheck:
-        test: [ "CMD-SHELL", "pg_isready -U postgres" ]
-        interval: 10s
-        timeout: 5s
-        retries: 5
+    image: postgres
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=university
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 

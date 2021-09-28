@@ -1,7 +1,7 @@
 package co.perficient.university.service.course;
 
 
-import co.perficient.university.model.Course;
+import co.perficient.university.model.dto.CourseDto;
 import co.perficient.university.port.CourseRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class FindAllCoursesService {
     }
 
 
-    public Set<Course> findAll() {
+    public Set<CourseDto> findAll() {
         return courseRepository.findAll();
     }
 

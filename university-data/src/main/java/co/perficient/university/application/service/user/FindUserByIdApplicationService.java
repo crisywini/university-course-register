@@ -1,6 +1,7 @@
 package co.perficient.university.application.service.user;
 
 import co.perficient.university.model.User;
+import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.service.user.FindUserByIdService;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ public class FindUserByIdApplicationService {
         this.findUserByIdService = findUserByIdService;
     }
 
-    public User run(String id) {
+    public UserDto run(String id) {
         return findUserByIdService.findById(id);
     }
 }

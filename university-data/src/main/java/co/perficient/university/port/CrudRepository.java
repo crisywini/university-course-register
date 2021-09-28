@@ -5,14 +5,18 @@ import org.springframework.stereotype.Repository;
 import java.util.Set;
 
 @Repository
-public interface CrudRepository<T, IDT> {
+public interface CrudRepository<T, TDto, IDT> {
 
-    T findById(IDT id);
+    TDto findById(IDT id);
 
-    T save(T object);
+    TDto save(T object);
 
     void delete(T object);
 
     void deleteById(IDT id);
+
+    TDto update(IDT id, T newEntity);
+
+    Set<TDto> findAll();
 
 }

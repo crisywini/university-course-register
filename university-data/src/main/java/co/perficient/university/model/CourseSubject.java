@@ -21,6 +21,8 @@ public class CourseSubject extends BaseEntity<CourseSubject> implements Serializ
     @EqualsAndHashCode.Include
     private Long id;
 
+    private String name;
+
     private String description;
     @Lob
     private String syllabus;
@@ -40,6 +42,7 @@ public class CourseSubject extends BaseEntity<CourseSubject> implements Serializ
     public CourseSubject updateWith(CourseSubject newItem) {
 
         return new CourseSubject(this.getId(),
+                newItem.getName(),
                 newItem.getDescription(),
                 newItem.getSyllabus(),
                 newItem.getQuota(),

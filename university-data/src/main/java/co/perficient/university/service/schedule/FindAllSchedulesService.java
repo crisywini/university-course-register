@@ -1,7 +1,7 @@
 package co.perficient.university.service.schedule;
 
 
-import co.perficient.university.model.Schedule;
+import co.perficient.university.model.dto.ScheduleDto;
 import co.perficient.university.port.ScheduleRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class FindAllSchedulesService {
     }
 
 
-    public Set<Schedule> findAll() {
+    public Set<ScheduleDto> findAll() {
         return scheduleService.findAll();
     }
 

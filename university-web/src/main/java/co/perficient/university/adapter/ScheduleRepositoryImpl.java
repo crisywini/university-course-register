@@ -2,11 +2,12 @@ package co.perficient.university.adapter;
 
 import co.perficient.university.adapter.jparepositories.ScheduleJPARepository;
 import co.perficient.university.model.Schedule;
+import co.perficient.university.model.dto.ScheduleDto;
 import co.perficient.university.port.ScheduleRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 public class ScheduleRepositoryImpl implements ScheduleRepository {
@@ -18,23 +19,39 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
     @Override
-    public Set<Schedule> findAll() {
-        return new HashSet<>(scheduleJPARepository.findAll());
+    public Set<ScheduleDto> findAll() {
+        return scheduleJPARepository
+                .findAll()
+                .stream()
+                .map(x -> new ScheduleDto(x.getId(),
+                        x.getStartDate(),
+                        x.getEndDate()))
+                .collect(Collectors.toSet());
     }
 
     @Override
-    public Schedule update(Long id, Schedule newEntity) {
-        return null;
+    public ScheduleDto update(Long id, Schedule newEntity) {
+        Schedule schedule = scheduleJPARepository.findById(id).get();
+        Schedule updatedSchedule = scheduleJPARepository.save(schedule.updateWith(newEntity));
+        return new ScheduleDto(updatedSchedule.getId(),
+                updatedSchedule.getStartDate(),
+                updatedSchedule.getEndDate());
     }
 
     @Override
-    public Schedule findById(Long id) {
-        return scheduleJPARepository.findById(id).orElse(null);
+    public ScheduleDto findById(Long id) {
+        Schedule schedule = scheduleJPARepository.findById(id).orElse(null);
+        return (schedule != null) ? new ScheduleDto(schedule.getId(),
+                schedule.getStartDate(),
+                schedule.getEndDate()) : null;
     }
 
     @Override
-    public Schedule save(Schedule object) {
-        return scheduleJPARepository.save(object);
+    public ScheduleDto save(Schedule object) {
+        Schedule schedule = scheduleJPARepository.save(object);
+        return new ScheduleDto(schedule.getId(),
+                schedule.getStartDate(),
+                schedule.getEndDate());
     }
 
     @Override

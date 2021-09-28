@@ -1,6 +1,6 @@
 package co.perficient.university.application.service.dayschedule;
 
-import co.perficient.university.model.DaySchedule;
+import co.perficient.university.model.dto.DayScheduleDto;
 import co.perficient.university.service.dayschedule.FindAllDaysService;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ public class FindAllDaysApplicationService {
         this.findAllDaysService = findAllDaysService;
     }
 
-    public Set<DaySchedule> run() {
+    public Set<DayScheduleDto> run() {
         return findAllDaysService.findAll();
     }
 }

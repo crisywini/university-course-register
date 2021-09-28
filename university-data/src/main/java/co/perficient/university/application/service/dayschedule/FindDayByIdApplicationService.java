@@ -1,6 +1,6 @@
 package co.perficient.university.application.service.dayschedule;
 
-import co.perficient.university.model.DaySchedule;
+import co.perficient.university.model.dto.DayScheduleDto;
 import co.perficient.university.service.dayschedule.FindDayByIdService;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ public class FindDayByIdApplicationService {
         this.findDayByIdService = findDayByIdService;
     }
 
-    public DaySchedule run(Long id) {
+    public DayScheduleDto run(Long id) {
         return findDayByIdService.findById(id);
     }
 }

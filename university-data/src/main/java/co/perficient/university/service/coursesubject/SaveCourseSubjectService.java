@@ -1,6 +1,7 @@
 package co.perficient.university.service.coursesubject;
 
 import co.perficient.university.model.CourseSubject;
+import co.perficient.university.model.dto.CourseSubjectDto;
 import co.perficient.university.port.CourseSubjectRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +15,13 @@ public class SaveCourseSubjectService {
         this.courseSubjectService = courseSubjectService;
     }
 
-    public CourseSubject save(CourseSubject courseSubject) {
+    public CourseSubjectDto save(CourseSubject courseSubject) {
         validateNonRepeated(courseSubject);
         return courseSubjectService.save(courseSubject);
     }
 
     private void validateNonRepeated(CourseSubject courseSubject) {
-        if (courseSubjectService.findById(courseSubject.getId()) != null) {
+        if (courseSubject.getId() != null && courseSubjectService.findById(courseSubject.getId()) != null) {
             throw new RuntimeException(COURSE_SUBJECT_REPEATED_MESSAGE);
         }
     }

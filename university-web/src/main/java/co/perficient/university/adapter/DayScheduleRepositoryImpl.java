@@ -2,11 +2,12 @@ package co.perficient.university.adapter;
 
 import co.perficient.university.adapter.jparepositories.DayScheduleJPARepository;
 import co.perficient.university.model.DaySchedule;
+import co.perficient.university.model.dto.DayScheduleDto;
 import co.perficient.university.port.DayScheduleRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 public class DayScheduleRepositoryImpl implements DayScheduleRepository {
@@ -19,23 +20,44 @@ public class DayScheduleRepositoryImpl implements DayScheduleRepository {
     }
 
     @Override
-    public Set<DaySchedule> findAll() {
-        return new HashSet<>(dayScheduleJPARepository.findAll());
+    public Set<DayScheduleDto> findAll() {
+        return dayScheduleJPARepository
+                .findAll()
+                .stream()
+                .map(x -> new DayScheduleDto(x.getId(),
+                        x.getName(),
+                        x.getStartHour() + "-" + x.getEndHour(),
+                        x.getClassroom()))
+                .collect(Collectors.toSet());
     }
 
     @Override
-    public DaySchedule update(Long id, DaySchedule newEntity) {
-        return null;
+    public DayScheduleDto update(Long id, DaySchedule newEntity) {
+        DaySchedule daySchedule = dayScheduleJPARepository.findById(id).get();
+        DaySchedule updatedDay = dayScheduleJPARepository.save(daySchedule.updateWith(newEntity));
+        return new DayScheduleDto(updatedDay.getId(),
+                updatedDay.getName(),
+                updatedDay.getStartHour() + "-" + updatedDay.getEndHour(),
+                updatedDay.getClassroom());
     }
 
     @Override
-    public DaySchedule findById(Long id) {
-        return dayScheduleJPARepository.findById(id).orElse(null);
+    public DayScheduleDto findById(Long id) {
+        DaySchedule daySchedule = dayScheduleJPARepository.findById(id).orElse(null);
+        return (daySchedule != null) ? new DayScheduleDto(daySchedule.getId(),
+                daySchedule.getName(),
+                daySchedule.getStartHour() + "-" + daySchedule.getEndHour(),
+                daySchedule.getClassroom()) : null;
     }
 
     @Override
-    public DaySchedule save(DaySchedule object) {
-        return dayScheduleJPARepository.save(object);
+    public DayScheduleDto save(DaySchedule object) {
+        DaySchedule daySchedule = dayScheduleJPARepository.save(object);
+
+        return new DayScheduleDto(daySchedule.getId(),
+                daySchedule.getName(),
+                daySchedule.getStartHour() + "-" + daySchedule.getEndHour(),
+                daySchedule.getClassroom());
     }
 
     @Override

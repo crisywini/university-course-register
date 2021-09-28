@@ -20,7 +20,7 @@ public class Schedule extends BaseEntity<Schedule> implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private long id;
+    private Long id;
     @Column(name = "start_date")
     private LocalDate startDate;
     @Column(name = "end_date")

@@ -2,6 +2,7 @@ package co.perficient.university.controllers;
 
 import co.perficient.university.application.service.coursesubject.*;
 import co.perficient.university.model.CourseSubject;
+import co.perficient.university.model.dto.CourseSubjectDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -36,12 +37,12 @@ public class CourseSubjectController {
     }
 
     @GetMapping
-    public CourseSubject findById(@RequestParam(name = "id") Long id) {
+    public CourseSubjectDto findById(@RequestParam(name = "id") Long id) {
         return findCourseSubjectByIdApplicationService.run(id);
     }
 
     @GetMapping("/courses")
-    public Set<CourseSubject> findAll() {
+    public Set<CourseSubjectDto> findAll() {
         return findAllCourseSubjectsApplicationService.run();
     }
 
@@ -55,8 +56,8 @@ public class CourseSubjectController {
         deleteCourseSubjectApplicationService.run(courseSubject);
     }
 
-    @PutMapping
-    public CourseSubject update(@RequestParam(name = "id") Long id,
+    @RequestMapping(value = "/{id}/update", method = RequestMethod.PUT)
+    public CourseSubjectDto update(@PathVariable Long id,
                                 @RequestBody CourseSubject courseSubject) {
         return updateCourseSubjectApplicationService.run(id, courseSubject);
     }

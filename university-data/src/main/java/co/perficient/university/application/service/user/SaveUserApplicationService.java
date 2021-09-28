@@ -1,6 +1,7 @@
 package co.perficient.university.application.service.user;
 
 import co.perficient.university.model.User;
+import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.service.user.SaveUserService;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ public class SaveUserApplicationService {
         this.saveUserService = saveUserService;
     }
 
-    public User run(User user) {
+    public UserDto run(User user) {
         return saveUserService.save(user);
     }
 }

@@ -1,6 +1,7 @@
 package co.perficient.university.service.schedule;
 
 import co.perficient.university.model.Schedule;
+import co.perficient.university.model.dto.ScheduleDto;
 import co.perficient.university.port.ScheduleRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +16,13 @@ public class SaveScheduleService {
         this.scheduleService = scheduleService;
     }
 
-    public Schedule save(Schedule schedule) {
+    public ScheduleDto save(Schedule schedule) {
         validateNonRepeated(schedule);
         return scheduleService.save(schedule);
     }
 
     private void validateNonRepeated(Schedule schedule) {
-        if (scheduleService.findById(schedule.getId()) != null) {
+        if (schedule.getId() != null && scheduleService.findById(schedule.getId()) != null) {
             throw new RuntimeException(SCHEDULE_REPEATED_MESSAGE);
         }
     }

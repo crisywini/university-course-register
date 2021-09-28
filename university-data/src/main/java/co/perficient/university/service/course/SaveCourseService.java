@@ -1,6 +1,7 @@
 package co.perficient.university.service.course;
 
 import co.perficient.university.model.Course;
+import co.perficient.university.model.dto.CourseDto;
 import co.perficient.university.port.CourseRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +15,14 @@ public class SaveCourseService {
         this.courseRepository = courseRepository;
     }
 
-    public Course save(Course course) {
+    public CourseDto save(Course course) {
         validateNonRepeated(course);
         return courseRepository.save(course);
     }
 
     private void validateNonRepeated(Course course) {
-        if (courseRepository.findById(course.getId()) != null) {
+
+        if (course.getId() != null && courseRepository.findById(course.getId()) != null) {
             throw new RuntimeException(COURSE_REPEATED_MESSAGE);
         }
     }

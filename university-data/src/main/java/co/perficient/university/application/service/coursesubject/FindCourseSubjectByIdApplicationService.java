@@ -1,6 +1,6 @@
 package co.perficient.university.application.service.coursesubject;
 
-import co.perficient.university.model.CourseSubject;
+import co.perficient.university.model.dto.CourseSubjectDto;
 import co.perficient.university.service.coursesubject.FindCourseSubjectByIdService;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ public class FindCourseSubjectByIdApplicationService {
         this.findCourseSubjectByIdService = findCourseSubjectByIdService;
     }
 
-    public CourseSubject run(Long id) {
+    public CourseSubjectDto run(Long id) {
         return findCourseSubjectByIdService.findById(id);
     }
 }

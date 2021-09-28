@@ -1,6 +1,7 @@
 package co.perficient.university.service.course;
 
 import co.perficient.university.model.Course;
+import co.perficient.university.model.dto.CourseDto;
 import co.perficient.university.port.CourseRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public class UpdateCourseService {
         this.courseRepository = courseRepository;
     }
 
-    public Course update(Long id, Course newCourse) {
+    public CourseDto update(Long id, Course newCourse) {
         validateExistingCourse(id);
         return courseRepository.update(id, newCourse);
     }

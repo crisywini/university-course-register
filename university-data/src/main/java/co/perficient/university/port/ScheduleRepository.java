@@ -1,10 +1,9 @@
 package co.perficient.university.port;
 
 import co.perficient.university.model.Schedule;
+import co.perficient.university.model.dto.ScheduleDto;
 
-import java.util.Set;
 
-public interface ScheduleRepository extends CrudRepository<Schedule, Long> {
-    Set<Schedule> findAll();
-    Schedule update(Long id, Schedule newEntity);
+public interface ScheduleRepository extends CrudRepository<Schedule, ScheduleDto, Long> {
+
 }

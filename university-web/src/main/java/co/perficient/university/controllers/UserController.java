@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @GetMapping
-    public User findById(@RequestParam(name = "id") String id) {
+    public UserDto findById(@RequestParam(name = "id") String id) {
         return findUserByIdApplicationService.run(id);
     }
 
@@ -57,8 +57,9 @@ public class UserController {
         deleteUserByIdApplicationService.run(id);
     }
 
-    @PutMapping
-    public UserDto update(@RequestParam(name = "id") String id,
+
+    @RequestMapping(value = "/{id}/update", method = RequestMethod.PUT)
+    public UserDto update(@PathVariable String id,
                           @RequestBody User newUser) {
         return updateUserApplicationService.run(id, newUser);
     }

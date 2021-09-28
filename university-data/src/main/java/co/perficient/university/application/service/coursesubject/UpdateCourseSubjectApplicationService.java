@@ -1,6 +1,7 @@
 package co.perficient.university.application.service.coursesubject;
 
 import co.perficient.university.model.CourseSubject;
+import co.perficient.university.model.dto.CourseSubjectDto;
 import co.perficient.university.service.coursesubject.UpdateCourseSubjectService;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ public class UpdateCourseSubjectApplicationService {
         this.updateCourseSubjectService = updateCourseSubjectService;
     }
 
-    public CourseSubject run(Long id, CourseSubject newCourseSubject) {
+    public CourseSubjectDto run(Long id, CourseSubject newCourseSubject) {
         return updateCourseSubjectService.update(id, newCourseSubject);
     }
 }

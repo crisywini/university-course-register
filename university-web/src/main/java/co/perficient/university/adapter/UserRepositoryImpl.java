@@ -6,7 +6,6 @@ import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.port.UserRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,13 +26,21 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User findById(String id) {
-        return userJPARepository.findById(id).orElse(null);
+    public UserDto findById(String id) {
+        User user = userJPARepository.findById(id).orElse(null);
+        return (user != null) ? new UserDto(user.getId(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName()) : null;
     }
 
     @Override
-    public User save(User object) {
-        return userJPARepository.save(object);
+    public UserDto save(User object) {
+        User user = userJPARepository.save(object);
+        return new UserDto(user.getId(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName());
     }
 
     @Override
@@ -48,8 +55,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public UserDto update(String id, User newEntity) {
-        User user = findById(id);
-        deleteById(id);
+        User user = userJPARepository.findById(id).get();
         User newUser = userJPARepository.save(user.updateWith(newEntity));
         return new UserDto(newUser.getId(),
                 newUser.getEmail(),

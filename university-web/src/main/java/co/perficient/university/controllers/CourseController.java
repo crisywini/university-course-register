@@ -2,6 +2,7 @@ package co.perficient.university.controllers;
 
 import co.perficient.university.application.service.course.*;
 import co.perficient.university.model.*;
+import co.perficient.university.model.dto.CourseDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -39,12 +40,12 @@ public class CourseController {
     }
 
     @GetMapping("/courses")
-    public Set<Course> findAll() {
+    public Set<CourseDto> findAll() {
         return findAllCoursesApplicationService.run();
     }
 
     @GetMapping
-    public Course findById(@RequestParam(name = "id") Long id) {
+    public CourseDto findById(@RequestParam(name = "id") Long id) {
         return findCourseByIdApplicationService.run(id);
     }
 
@@ -58,13 +59,10 @@ public class CourseController {
         deleteCourseByIdApplicationService.run(id);
     }
 
-    @PutMapping
-    public Course update(@RequestParam(name = "id") Long id,
-                         @RequestBody Course course) {
+    @RequestMapping(value = "/{id}/update", method = RequestMethod.PUT)
+    public CourseDto update(@PathVariable Long id,
+                            @RequestBody Course course) {
         return updateCourseApplicationService.run(id, course);
     }
 
-    private String getValue(Map<String, Object> json, String key) {
-        return json.get(key).toString();
-    }
 }

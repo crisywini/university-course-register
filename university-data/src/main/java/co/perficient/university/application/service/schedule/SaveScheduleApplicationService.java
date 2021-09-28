@@ -1,6 +1,7 @@
 package co.perficient.university.application.service.schedule;
 
 import co.perficient.university.model.Schedule;
+import co.perficient.university.model.dto.ScheduleDto;
 import co.perficient.university.service.schedule.SaveScheduleService;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ public class SaveScheduleApplicationService {
         this.saveScheduleService = saveScheduleService;
     }
 
-    public Schedule run(Schedule schedule) {
+    public ScheduleDto run(Schedule schedule) {
         return saveScheduleService.save(schedule);
     }
 }
