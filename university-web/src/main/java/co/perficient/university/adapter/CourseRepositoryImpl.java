@@ -66,13 +66,20 @@ public class CourseRepositoryImpl implements CourseRepository {
 
     @Override
     public CourseDto update(Long id, Course newEntity) {
-        Course course = courseJPARepository.findById(id).get();
+        Course course = courseJPARepository.findById(id).orElse(new Course());
         Course updatedCourse = courseJPARepository.save(course.updateWith(newEntity));
-        return new CourseDto(updatedCourse.getId(),
-                updatedCourse.getName(),
-                updatedCourse.getTitle(),
-                updatedCourse.getAcademicLevel(),
-                updatedCourse.getFaculty(),
-                updatedCourse.getModality());
+        return (updatedCourse != null) ?
+                new CourseDto(updatedCourse.getId(),
+                        updatedCourse.getName(),
+                        updatedCourse.getTitle(),
+                        updatedCourse.getAcademicLevel(),
+                        updatedCourse.getFaculty(),
+                        updatedCourse.getModality()) :
+                new CourseDto(newEntity.getId(),
+                        newEntity.getName(),
+                        newEntity.getTitle(),
+                        newEntity.getAcademicLevel(),
+                        newEntity.getFaculty(),
+                        newEntity.getModality());
     }
 }

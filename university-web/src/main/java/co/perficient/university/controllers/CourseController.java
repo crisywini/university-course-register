@@ -5,7 +5,6 @@ import co.perficient.university.model.*;
 import co.perficient.university.model.dto.CourseDto;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
 import java.util.Set;
 
 @RestController
