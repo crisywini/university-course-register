@@ -37,12 +37,12 @@ public class CourseRepositoryImpl implements CourseRepository {
     @Override
     public CourseDto findById(Long id) {
         Course course = courseJPARepository.findById(id).orElse(null);
-        return (course != null) ? new CourseDto(course.getId(),
+        return new CourseDto(course.getId(),
                 course.getName(),
                 course.getTitle(),
                 course.getAcademicLevel(),
                 course.getFaculty(),
-                course.getModality()) : null;
+                course.getModality());
     }
 
     @Override
@@ -90,21 +90,21 @@ public class CourseRepositoryImpl implements CourseRepository {
 
     @Override
     public List<CourseDto> findByUser(String userId) {
-        return null;
+        return courseJPARepository.findByUser(userId);
     }
 
     @Override
     public List<CourseDto> findByFaculty(Faculty faculty) {
-        return null;
+        return courseJPARepository.findByFaculty(faculty);
     }
 
     @Override
     public List<CourseDto> findByAcademicLevel(AcademicLevel academicLevel) {
-        return null;
+        return courseJPARepository.findByAcademicLevel(academicLevel);
     }
 
     @Override
     public List<CourseDto> findByModality(Modality modality) {
-        return null;
+        return courseJPARepository.findByModality(modality);
     }
 }

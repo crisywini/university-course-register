@@ -26,7 +26,8 @@ public class CourseSubjectRepositoryImpl implements CourseSubjectRepository {
                 .stream()
                 .map(x -> new CourseSubjectDto(x.getId(),
                         x.getDescription(),
-                        x.getName()))
+                        x.getName(),
+                        x.getMethodology()))
                 .collect(Collectors.toSet());
     }
 
@@ -35,7 +36,8 @@ public class CourseSubjectRepositoryImpl implements CourseSubjectRepository {
         CourseSubject courseSubject = courseSubjectJPARepository.findById(id).orElse(null);
         return new CourseSubjectDto(courseSubject.getId(),
                 courseSubject.getDescription(),
-                courseSubject.getName());
+                courseSubject.getName(),
+                courseSubject.getMethodology());
     }
 
     @Override
@@ -43,7 +45,8 @@ public class CourseSubjectRepositoryImpl implements CourseSubjectRepository {
         CourseSubject courseSubject = courseSubjectJPARepository.save(object);
         return new CourseSubjectDto(courseSubject.getId(),
                 courseSubject.getDescription(),
-                courseSubject.getName());
+                courseSubject.getName(),
+                courseSubject.getMethodology());
     }
 
     @Override
@@ -62,7 +65,8 @@ public class CourseSubjectRepositoryImpl implements CourseSubjectRepository {
         CourseSubject updatedCourseSubject = courseSubjectJPARepository.save(courseSubject.updateWith(newEntity));
         return new CourseSubjectDto(updatedCourseSubject.getId(),
                 updatedCourseSubject.getDescription(),
-                updatedCourseSubject.getName());
+                updatedCourseSubject.getName(),
+                courseSubject.getMethodology());
     }
 
     @Override

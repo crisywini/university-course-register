@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -21,19 +22,23 @@ public class CourseController {
     private final DeleteCourseByIdApplicationService deleteCourseByIdApplicationService;
     private final DeleteCourseApplicationService deleteCourseApplicationService;
     private final UpdateCourseApplicationService updateCourseApplicationService;
+    private final FindCourseByAcademicLevelApplicationService findCourseByAcademicLevelApplicationService;
+
 
     public CourseController(SaveCourseApplicationService saveCourseApplicationService,
                             FindCourseByIdApplicationService findCourseByIdApplicationService,
                             FindAllCoursesApplicationService findAllCoursesApplicationService,
                             DeleteCourseByIdApplicationService deleteCourseByIdApplicationService,
                             DeleteCourseApplicationService deleteCourseApplicationService,
-                            UpdateCourseApplicationService updateCourseApplicationService) {
+                            UpdateCourseApplicationService updateCourseApplicationService,
+                            FindCourseByAcademicLevelApplicationService findCourseByAcademicLevelApplicationService) {
         this.saveCourseApplicationService = saveCourseApplicationService;
         this.findCourseByIdApplicationService = findCourseByIdApplicationService;
         this.findAllCoursesApplicationService = findAllCoursesApplicationService;
         this.deleteCourseByIdApplicationService = deleteCourseByIdApplicationService;
         this.deleteCourseApplicationService = deleteCourseApplicationService;
         this.updateCourseApplicationService = updateCourseApplicationService;
+        this.findCourseByAcademicLevelApplicationService = findCourseByAcademicLevelApplicationService;
     }
 
 
@@ -57,6 +62,13 @@ public class CourseController {
     public ResponseEntity<CourseDto> findById(@RequestParam(name = "id") Long id) {
         return new ResponseEntity<>(findCourseByIdApplicationService.run(id), HttpStatus.OK);
     }
+
+    @GetMapping("/courses/byAcademicLevel")
+    public ResponseEntity<List<CourseDto>> findByAcademicLevel(@RequestParam(name = "academic_level") AcademicLevel academicLevel) {
+
+        return new ResponseEntity<>(findCourseByAcademicLevelApplicationService.run(academicLevel), HttpStatus.OK);
+    }
+
 
     @DeleteMapping("/course")
     public ResponseEntity<String> delete(@RequestBody Course course) {
