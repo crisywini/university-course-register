@@ -1,7 +1,6 @@
 package co.perficient.university.adapter;
 
 import co.perficient.university.adapter.jparepositories.DayScheduleJPARepository;
-import co.perficient.university.model.DaySchedule;
 import co.perficient.university.model.dto.DayScheduleDto;
 import co.perficient.university.port.DayScheduleRepository;
 import org.springframework.stereotype.Repository;

@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
@@ -21,22 +20,27 @@ public class CourseSubject extends BaseEntity<CourseSubject> implements Serializ
     @EqualsAndHashCode.Include
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String description;
+
     @Lob
+    @Column(nullable = false)
     private String syllabus;
-    private int quota;
-    @Column(name = "pensum_code")
-    private int pensumCode;
-    @Column(name = "group_course")
-    private String group;
+
     @ManyToOne
+    @Column(nullable = false)
     private Course course;
-    @ManyToMany
-    private List<User> users;
-    @OneToOne
-    private Schedule schedule;
+
+    @Column(name = "academic_credits", nullable = false)
+    private int academicCredits;
+
+    @Enumerated
+    @Column(nullable = false)
+    private Methodology methodology;
+
 
     @Override
     public CourseSubject updateWith(CourseSubject newItem) {
@@ -45,11 +49,8 @@ public class CourseSubject extends BaseEntity<CourseSubject> implements Serializ
                 newItem.getName(),
                 newItem.getDescription(),
                 newItem.getSyllabus(),
-                newItem.getQuota(),
-                newItem.getPensumCode(),
-                newItem.getGroup(),
                 newItem.getCourse(),
-                newItem.getUsers(),
-                newItem.getSchedule());
+                newItem.getAcademicCredits(),
+                newItem.getMethodology());
     }
 }

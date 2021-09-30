@@ -1,6 +1,5 @@
 package co.perficient.university.application.service.schedule;
 
-import co.perficient.university.model.Schedule;
 import co.perficient.university.service.schedule.DeleteScheduleService;
 import org.springframework.stereotype.Service;
 

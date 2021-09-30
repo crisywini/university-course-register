@@ -1,6 +1,5 @@
 package co.perficient.university.port;
 
-import co.perficient.university.model.DaySchedule;
 import co.perficient.university.model.dto.DayScheduleDto;
 
 

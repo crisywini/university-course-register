@@ -1,7 +1,6 @@
 package co.perficient.university.adapter;
 
 import co.perficient.university.adapter.jparepositories.ScheduleJPARepository;
-import co.perficient.university.model.Schedule;
 import co.perficient.university.model.dto.ScheduleDto;
 import co.perficient.university.port.ScheduleRepository;
 import org.springframework.stereotype.Repository;

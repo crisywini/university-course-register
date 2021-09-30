@@ -1,6 +1,5 @@
 package co.perficient.university.service.dayschedule;
 
-import co.perficient.university.model.DaySchedule;
 import co.perficient.university.port.DayScheduleRepository;
 import org.springframework.stereotype.Service;
 

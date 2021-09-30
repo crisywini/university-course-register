@@ -1,6 +1,5 @@
 package co.perficient.university.application.service.dayschedule;
 
-import co.perficient.university.model.DaySchedule;
 import co.perficient.university.service.dayschedule.DeleteDayService;
 import org.springframework.stereotype.Service;
 

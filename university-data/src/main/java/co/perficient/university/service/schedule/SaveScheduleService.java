@@ -1,6 +1,5 @@
 package co.perficient.university.service.schedule;
 
-import co.perficient.university.model.Schedule;
 import co.perficient.university.model.dto.ScheduleDto;
 import co.perficient.university.port.ScheduleRepository;
 import org.springframework.stereotype.Service;

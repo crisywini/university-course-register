@@ -35,28 +35,18 @@ public class Course extends BaseEntity<Course> implements Serializable {
     @Column(nullable = false)
     private Faculty faculty;
 
-    @Enumerated
-    @Column(nullable = false)
-    private Modality modality;
-
-    @Column(name = "total_academic_credits", nullable = false)
-    private int totalAcademicCredits;
-
-
     @Column(name = "course_subjects")
     @OneToMany(mappedBy = "course")
     private Set<CourseSubject> courseSubjects;
 
+    @ManyToOne
+    @Column(name = "user_creator")
+    private User user;
 
-    public Course(String name, String title, AcademicLevel academicLevel,
-                  Faculty faculty, Modality modality, int totalAcademicCredits) {
-        this.name = name;
-        this.title = title;
-        this.academicLevel = academicLevel;
-        this.faculty = faculty;
-        this.modality = modality;
-        this.totalAcademicCredits = totalAcademicCredits;
-    }
+    @Enumerated
+    @Column(nullable = false)
+    private Modality modality;
+
 
     @Override
     public Course updateWith(Course newItem) {
@@ -66,9 +56,9 @@ public class Course extends BaseEntity<Course> implements Serializable {
                 newItem.getTitle(),
                 newItem.getAcademicLevel(),
                 newItem.getFaculty(),
-                newItem.getModality(),
-                newItem.getTotalAcademicCredits(),
-                newItem.getCourseSubjects());
+                newItem.getCourseSubjects(),
+                newItem.getUser(),
+                newItem.getModality());
     }
 
 }
