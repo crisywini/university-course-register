@@ -2,7 +2,9 @@ package co.perficient.university.adapter;
 
 import co.perficient.university.adapter.jparepositories.CourseJPARepository;
 import co.perficient.university.model.Course;
+import co.perficient.university.model.CourseSubject;
 import co.perficient.university.model.dto.CourseDto;
+import co.perficient.university.model.dto.CourseSubjectDto;
 import co.perficient.university.port.CourseRepository;
 import org.springframework.stereotype.Repository;
 
@@ -68,18 +70,16 @@ public class CourseRepositoryImpl implements CourseRepository {
     public CourseDto update(Long id, Course newEntity) {
         Course course = courseJPARepository.findById(id).orElse(new Course());
         Course updatedCourse = courseJPARepository.save(course.updateWith(newEntity));
-        return (updatedCourse != null) ?
-                new CourseDto(updatedCourse.getId(),
-                        updatedCourse.getName(),
-                        updatedCourse.getTitle(),
-                        updatedCourse.getAcademicLevel(),
-                        updatedCourse.getFaculty(),
-                        updatedCourse.getModality()) :
-                new CourseDto(newEntity.getId(),
-                        newEntity.getName(),
-                        newEntity.getTitle(),
-                        newEntity.getAcademicLevel(),
-                        newEntity.getFaculty(),
-                        newEntity.getModality());
+        return new CourseDto(updatedCourse.getId(),
+                updatedCourse.getName(),
+                updatedCourse.getTitle(),
+                updatedCourse.getAcademicLevel(),
+                updatedCourse.getFaculty(),
+                updatedCourse.getModality());
+    }
+
+    @Override
+    public CourseSubjectDto addCourseSubject(Long courseId, CourseSubject courseSubject) {
+        return null;
     }
 }

@@ -11,5 +11,4 @@ public class CourseSubjectDto {
     private Long id;
     private String description;
     private String name;
-    private int quota;
 }

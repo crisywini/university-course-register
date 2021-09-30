@@ -2,12 +2,10 @@ package co.perficient.university.adapter;
 
 import co.perficient.university.adapter.jparepositories.CourseSubjectJPARepository;
 import co.perficient.university.model.CourseSubject;
-import co.perficient.university.model.dto.CourseDto;
 import co.perficient.university.model.dto.CourseSubjectDto;
 import co.perficient.university.port.CourseSubjectRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,8 +24,7 @@ public class CourseSubjectRepositoryImpl implements CourseSubjectRepository {
                 .stream()
                 .map(x -> new CourseSubjectDto(x.getId(),
                         x.getDescription(),
-                        x.getName(),
-                        x.getQuota()))
+                        x.getName()))
                 .collect(Collectors.toSet());
     }
 
@@ -36,8 +33,7 @@ public class CourseSubjectRepositoryImpl implements CourseSubjectRepository {
         CourseSubject courseSubject = courseSubjectJPARepository.findById(id).orElse(null);
         return new CourseSubjectDto(courseSubject.getId(),
                 courseSubject.getDescription(),
-                courseSubject.getName(),
-                courseSubject.getQuota());
+                courseSubject.getName());
     }
 
     @Override
@@ -45,8 +41,7 @@ public class CourseSubjectRepositoryImpl implements CourseSubjectRepository {
         CourseSubject courseSubject = courseSubjectJPARepository.save(object);
         return new CourseSubjectDto(courseSubject.getId(),
                 courseSubject.getDescription(),
-                courseSubject.getName(),
-                courseSubject.getQuota());
+                courseSubject.getName());
     }
 
     @Override
@@ -65,7 +60,6 @@ public class CourseSubjectRepositoryImpl implements CourseSubjectRepository {
         CourseSubject updatedCourseSubject = courseSubjectJPARepository.save(courseSubject.updateWith(newEntity));
         return new CourseSubjectDto(updatedCourseSubject.getId(),
                 updatedCourseSubject.getDescription(),
-                updatedCourseSubject.getName(),
-                updatedCourseSubject.getQuota());
+                updatedCourseSubject.getName());
     }
 }

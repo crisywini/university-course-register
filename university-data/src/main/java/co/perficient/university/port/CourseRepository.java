@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CourseRepository extends CrudRepository<Course, CourseDto, Long> {
 
-    CourseSubjectDto addCourseSubject(Long courseId, CourseSubject);
+    CourseSubjectDto addCourseSubject(Long courseId, CourseSubject courseSubject);
 }
