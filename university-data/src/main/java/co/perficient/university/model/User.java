@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "user_student")
+@Entity(name = "user_manager")
 public class User extends BaseEntity<User> implements Serializable {
 
     @Id
@@ -36,8 +36,7 @@ public class User extends BaseEntity<User> implements Serializable {
     @Column(nullable = false)
     private Role role;
 
-    @OneToMany(mappedBy = "user")
-    @Column(name = "courses", unique = true)
+    @OneToMany(mappedBy = "userCreator")
     private List<Course> courses;
 
 

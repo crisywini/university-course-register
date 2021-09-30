@@ -1,5 +1,6 @@
 package co.perficient.university.service.coursesubject;
 
+import co.perficient.university.exception.NullEntityException;
 import co.perficient.university.model.CourseSubject;
 import co.perficient.university.port.CourseSubjectRepository;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class DeleteCourseSubjectService {
 
     private void validateExisting(CourseSubject courseSubject) {
         if (courseSubjectService.findById(courseSubject.getId()) == null) {
-            throw new RuntimeException(NON_EXISTING_COURSE_SUBJECT_MESSAGE);
+            throw new NullEntityException(NON_EXISTING_COURSE_SUBJECT_MESSAGE);
         }
     }
 }

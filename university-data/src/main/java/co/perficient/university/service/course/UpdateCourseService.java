@@ -1,5 +1,6 @@
 package co.perficient.university.service.course;
 
+import co.perficient.university.exception.NullEntityException;
 import co.perficient.university.model.Course;
 import co.perficient.university.model.dto.CourseDto;
 import co.perficient.university.port.CourseRepository;
@@ -22,7 +23,7 @@ public class UpdateCourseService {
 
     private void validateExistingCourse(Long id) {
         if (courseRepository.findById(id) == null) {
-            throw new RuntimeException(NON_EXISTING_COURSE_MESSAGE);
+            throw new NullEntityException(NON_EXISTING_COURSE_MESSAGE);
         }
     }
 }

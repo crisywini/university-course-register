@@ -1,5 +1,6 @@
 package co.perficient.university.service.user;
 
+import co.perficient.university.exception.NullEntityException;
 import co.perficient.university.port.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class DeleteUserByIdService {
 
     private void validateExisting(String id) {
         if (userService.findById(id) == null) {
-            throw new RuntimeException(NON_EXISTING_USER_MESSAGE);
+            throw new NullEntityException(NON_EXISTING_USER_MESSAGE);
         }
     }
 }

@@ -1,5 +1,6 @@
 package co.perficient.university.service.user;
 
+import co.perficient.university.exception.RepeatedEntityException;
 import co.perficient.university.model.User;
 import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.port.UserRepository;
@@ -23,7 +24,7 @@ public class SaveUserService {
 
     private void validateNonRepeated(User user) {
         if (userService.findById(user.getId()) != null) {
-            throw new RuntimeException(USER_REPEATED_MESSAGE);
+            throw new RepeatedEntityException(USER_REPEATED_MESSAGE);
         }
     }
 

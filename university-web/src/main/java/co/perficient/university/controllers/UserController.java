@@ -1,8 +1,12 @@
 package co.perficient.university.controllers;
 
 import co.perficient.university.application.service.user.*;
+import co.perficient.university.exception.NullEntityException;
+import co.perficient.university.exception.RepeatedEntityException;
 import co.perficient.university.model.User;
 import co.perficient.university.model.dto.UserDto;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -33,35 +37,60 @@ public class UserController {
     }
 
     @PostMapping(consumes = "application/json")
-    public void save(@RequestBody User user) {
-        saveUserApplicationService.run(user);
+    public ResponseEntity<?> save(@RequestBody User user) {
+
+        UserDto saved = null;
+        try {
+            saved = saveUserApplicationService.run(user);
+        } catch (RepeatedEntityException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
+        return new ResponseEntity<>(saved, HttpStatus.OK);
     }
 
     @GetMapping("/users")
-    public Set<UserDto> findAll() {
-        return findAllUsersApplicationService.run();
+    public ResponseEntity<Set<UserDto>> findAll() {
+        return new ResponseEntity<>(findAllUsersApplicationService.run(), HttpStatus.OK);
     }
 
     @GetMapping
-    public UserDto findById(@RequestParam(name = "id") String id) {
-        return findUserByIdApplicationService.run(id);
+    public ResponseEntity<UserDto> findById(@RequestParam(name = "id") String id) {
+        return new ResponseEntity<>(findUserByIdApplicationService.run(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/user")
-    public void delete(@RequestBody User user) {
-        deleteUserApplicationService.run(user);
+    public ResponseEntity<String> delete(@RequestBody User user) {
+        try {
+            deleteUserApplicationService.run(user);
+        } catch (NullEntityException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        String message = "The user " + user.getId() + " was removed";
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @DeleteMapping
-    public void deleteById(@RequestParam(name = "id") String id) {
-        deleteUserByIdApplicationService.run(id);
+    public ResponseEntity<String> deleteById(@RequestParam(name = "id") String id) {
+        try {
+            deleteUserByIdApplicationService.run(id);
+        } catch (NullEntityException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        String message = "The user " + id + " was removed";
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
 
     @RequestMapping(value = "/{id}/update", method = RequestMethod.PUT)
-    public UserDto update(@PathVariable String id,
+    public ResponseEntity<?> update(@PathVariable String id,
                           @RequestBody User newUser) {
-        return updateUserApplicationService.run(id, newUser);
+        UserDto updated = null;
+        try{
+            updated = updateUserApplicationService.run(id, newUser);
+        }catch (NullEntityException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
 }

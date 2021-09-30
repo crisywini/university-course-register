@@ -31,7 +31,7 @@ public class CourseSubject extends BaseEntity<CourseSubject> implements Serializ
     private String syllabus;
 
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private Course course;
 
     @Column(name = "academic_credits", nullable = false)

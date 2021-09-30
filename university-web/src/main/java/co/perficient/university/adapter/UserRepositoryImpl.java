@@ -1,11 +1,13 @@
 package co.perficient.university.adapter;
 
 import co.perficient.university.adapter.jparepositories.UserJPARepository;
+import co.perficient.university.model.Role;
 import co.perficient.university.model.User;
 import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.port.UserRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -61,5 +63,15 @@ public class UserRepositoryImpl implements UserRepository {
                 newUser.getEmail(),
                 newUser.getFirstName(),
                 newUser.getLastName());
+    }
+
+    @Override
+    public List<UserDto> findByRole(Role role) {
+        return null;
+    }
+
+    @Override
+    public List<UserDto> findByFirstName(String name) {
+        return null;
     }
 }

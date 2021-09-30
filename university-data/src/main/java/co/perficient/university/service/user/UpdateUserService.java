@@ -1,5 +1,6 @@
 package co.perficient.university.service.user;
 
+import co.perficient.university.exception.NullEntityException;
 import co.perficient.university.model.User;
 import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.port.UserRepository;
@@ -21,7 +22,7 @@ public class UpdateUserService {
 
     private void validateExistingUser(String id) {
         if (userRepository.findById(id) == null) {
-            throw new RuntimeException(NON_EXISTING_USER_MESSAGE);
+            throw new NullEntityException(NON_EXISTING_USER_MESSAGE);
         }
     }
 }

@@ -1,5 +1,6 @@
 package co.perficient.university.service.coursesubject;
 
+import co.perficient.university.exception.RepeatedEntityException;
 import co.perficient.university.model.CourseSubject;
 import co.perficient.university.model.dto.CourseSubjectDto;
 import co.perficient.university.port.CourseSubjectRepository;
@@ -22,7 +23,7 @@ public class SaveCourseSubjectService {
 
     private void validateNonRepeated(CourseSubject courseSubject) {
         if (courseSubject.getId() != null && courseSubjectService.findById(courseSubject.getId()) != null) {
-            throw new RuntimeException(COURSE_SUBJECT_REPEATED_MESSAGE);
+            throw new RepeatedEntityException(COURSE_SUBJECT_REPEATED_MESSAGE);
         }
     }
 

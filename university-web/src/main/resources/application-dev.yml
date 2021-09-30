@@ -3,6 +3,6 @@ crisi:
   password: Crisipassword
 spring:
   datasource:
-    url: jdbc:postgresql://db:5432/university
+    url: jdbc:postgresql://localhost:5432/university_dev
     username: postgres
     password: root

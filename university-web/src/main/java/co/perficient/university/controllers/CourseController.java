@@ -1,8 +1,12 @@
 package co.perficient.university.controllers;
 
 import co.perficient.university.application.service.course.*;
+import co.perficient.university.exception.NullEntityException;
+import co.perficient.university.exception.RepeatedEntityException;
 import co.perficient.university.model.*;
 import co.perficient.university.model.dto.CourseDto;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -34,34 +38,59 @@ public class CourseController {
 
 
     @PostMapping(consumes = "application/json")
-    public void save(@RequestBody Course course) {
-        saveCourseApplicationService.run(course);
+    public ResponseEntity<?> save(@RequestBody Course course) {
+        CourseDto saved = null;
+        try {
+            saved = saveCourseApplicationService.run(course);
+        } catch (RepeatedEntityException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
+        return new ResponseEntity<>(saved, HttpStatus.OK);
     }
 
     @GetMapping("/courses")
-    public Set<CourseDto> findAll() {
-        return findAllCoursesApplicationService.run();
+    public ResponseEntity<Set<CourseDto>> findAll() {
+        return new ResponseEntity<>(findAllCoursesApplicationService.run(), HttpStatus.OK);
     }
 
     @GetMapping
-    public CourseDto findById(@RequestParam(name = "id") Long id) {
-        return findCourseByIdApplicationService.run(id);
+    public ResponseEntity<CourseDto> findById(@RequestParam(name = "id") Long id) {
+        return new ResponseEntity<>(findCourseByIdApplicationService.run(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/course")
-    public void delete(@RequestBody Course course) {
-        deleteCourseApplicationService.run(course);
+    public ResponseEntity<String> delete(@RequestBody Course course) {
+        try {
+            deleteCourseApplicationService.run(course);
+        } catch (NullEntityException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        String message = "Course: " + course.getId() + " removed";
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @DeleteMapping
-    public void deleteById(@RequestParam(name = "id") Long id) {
-        deleteCourseByIdApplicationService.run(id);
+    public ResponseEntity<String> deleteById(@RequestParam(name = "id") Long id) {
+        try {
+            deleteCourseByIdApplicationService.run(id);
+        } catch (NullEntityException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        String message = "Course: " + id + " removed";
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}/update", method = RequestMethod.PUT)
-    public CourseDto update(@PathVariable Long id,
-                            @RequestBody Course course) {
-        return updateCourseApplicationService.run(id, course);
+    public ResponseEntity<?> update(@PathVariable Long id,
+                                    @RequestBody Course course) {
+        CourseDto updated = null;
+        try {
+            updated = updateCourseApplicationService.run(id, course);
+        } catch (NullEntityException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
+        return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
 }

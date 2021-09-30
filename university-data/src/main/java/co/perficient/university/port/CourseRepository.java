@@ -1,13 +1,20 @@
 package co.perficient.university.port;
 
-import co.perficient.university.model.Course;
-import co.perficient.university.model.CourseSubject;
+import co.perficient.university.model.*;
 import co.perficient.university.model.dto.CourseDto;
 import co.perficient.university.model.dto.CourseSubjectDto;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface CourseRepository extends CrudRepository<Course, CourseDto, Long> {
 
     CourseSubjectDto addCourseSubject(Long courseId, CourseSubject courseSubject);
+    List<CourseDto> findByName(String name);
+    List<CourseDto> findByUser(String userId);
+    List<CourseDto> findByFaculty(Faculty faculty);
+    List<CourseDto> findByAcademicLevel(AcademicLevel academicLevel);
+    List<CourseDto> findByModality(Modality modality);
+
 }

@@ -1,13 +1,13 @@
 package co.perficient.university.adapter;
 
 import co.perficient.university.adapter.jparepositories.CourseJPARepository;
-import co.perficient.university.model.Course;
-import co.perficient.university.model.CourseSubject;
+import co.perficient.university.model.*;
 import co.perficient.university.model.dto.CourseDto;
 import co.perficient.university.model.dto.CourseSubjectDto;
 import co.perficient.university.port.CourseRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -80,6 +80,31 @@ public class CourseRepositoryImpl implements CourseRepository {
 
     @Override
     public CourseSubjectDto addCourseSubject(Long courseId, CourseSubject courseSubject) {
+        return null;
+    }
+
+    @Override
+    public List<CourseDto> findByName(String name) {
+        return courseJPARepository.findByName(name);
+    }
+
+    @Override
+    public List<CourseDto> findByUser(String userId) {
+        return null;
+    }
+
+    @Override
+    public List<CourseDto> findByFaculty(Faculty faculty) {
+        return null;
+    }
+
+    @Override
+    public List<CourseDto> findByAcademicLevel(AcademicLevel academicLevel) {
+        return null;
+    }
+
+    @Override
+    public List<CourseDto> findByModality(Modality modality) {
         return null;
     }
 }

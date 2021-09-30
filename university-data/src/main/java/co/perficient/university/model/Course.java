@@ -40,8 +40,7 @@ public class Course extends BaseEntity<Course> implements Serializable {
     private Set<CourseSubject> courseSubjects;
 
     @ManyToOne
-    @Column(name = "user_creator")
-    private User user;
+    private User userCreator;
 
     @Enumerated
     @Column(nullable = false)
@@ -57,7 +56,7 @@ public class Course extends BaseEntity<Course> implements Serializable {
                 newItem.getAcademicLevel(),
                 newItem.getFaculty(),
                 newItem.getCourseSubjects(),
-                newItem.getUser(),
+                newItem.getUserCreator(),
                 newItem.getModality());
     }
 
