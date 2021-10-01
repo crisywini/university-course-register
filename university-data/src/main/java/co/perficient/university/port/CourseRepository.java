@@ -16,5 +16,4 @@ public interface CourseRepository extends CrudRepository<Course, CourseDto, Long
     List<CourseDto> findByFaculty(Faculty faculty);
     List<CourseDto> findByAcademicLevel(AcademicLevel academicLevel);
     List<CourseDto> findByModality(Modality modality);
-
 }

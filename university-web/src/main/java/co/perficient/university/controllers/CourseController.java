@@ -24,6 +24,10 @@ public class CourseController {
     private final DeleteCourseApplicationService deleteCourseApplicationService;
     private final UpdateCourseApplicationService updateCourseApplicationService;
     private final FindCourseByAcademicLevelApplicationService findCourseByAcademicLevelApplicationService;
+    private final FindCoursesByUserApplicationService findCoursesByUserApplicationService;
+    private final FindCoursesByModalityApplicationService findCoursesByModalityApplicationService;
+    private final FindCoursesByNameApplicationService findCoursesByNameApplicationService;
+    private final FindCoursesByFacultyApplicationService findCoursesByFacultyApplicationService;
 
 
     public CourseController(SaveCourseApplicationService saveCourseApplicationService,
@@ -32,7 +36,11 @@ public class CourseController {
                             DeleteCourseByIdApplicationService deleteCourseByIdApplicationService,
                             DeleteCourseApplicationService deleteCourseApplicationService,
                             UpdateCourseApplicationService updateCourseApplicationService,
-                            FindCourseByAcademicLevelApplicationService findCourseByAcademicLevelApplicationService) {
+                            FindCourseByAcademicLevelApplicationService findCourseByAcademicLevelApplicationService,
+                            FindCoursesByUserApplicationService findCoursesByUserApplicationService,
+                            FindCoursesByModalityApplicationService findCoursesByModalityApplicationService,
+                            FindCoursesByNameApplicationService findCoursesByNameApplicationService,
+                            FindCoursesByFacultyApplicationService findCoursesByFacultyApplicationService) {
         this.saveCourseApplicationService = saveCourseApplicationService;
         this.findCourseByIdApplicationService = findCourseByIdApplicationService;
         this.findAllCoursesApplicationService = findAllCoursesApplicationService;
@@ -40,6 +48,11 @@ public class CourseController {
         this.deleteCourseApplicationService = deleteCourseApplicationService;
         this.updateCourseApplicationService = updateCourseApplicationService;
         this.findCourseByAcademicLevelApplicationService = findCourseByAcademicLevelApplicationService;
+        this.findCoursesByNameApplicationService = findCoursesByNameApplicationService;
+        this.findCoursesByUserApplicationService = findCoursesByUserApplicationService;
+        this.findCoursesByModalityApplicationService = findCoursesByModalityApplicationService;
+        this.findCoursesByFacultyApplicationService = findCoursesByFacultyApplicationService;
+
     }
 
 
@@ -72,6 +85,45 @@ public class CourseController {
         } catch (ParamNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+        return new ResponseEntity<>(courses, HttpStatus.OK);
+    }
+
+    @GetMapping("/courses/byFaculty")
+    public ResponseEntity<?> findByFaculty(@RequestParam(name = "faculty") String faculty) {
+        List<CourseDto> courses = null;
+        try {
+            courses = findCoursesByFacultyApplicationService.run(Faculty.of(faculty));
+        } catch (ParamNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(courses, HttpStatus.OK);
+    }
+
+    @GetMapping("/courses/byModality")
+    public ResponseEntity<?> findByModality(@RequestParam(name = "modality") String modality) {
+        List<CourseDto> courses = null;
+        try {
+            courses = findCoursesByModalityApplicationService.run(Modality.of(modality));
+        } catch (ParamNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(courses, HttpStatus.OK);
+    }
+
+    @GetMapping("/courses/byUser")
+    public ResponseEntity<?> findByUser(@RequestParam(name = "user") String user) {
+        List<CourseDto> courses = null;
+        try {
+            courses = findCoursesByUserApplicationService.run(user);
+        } catch (NullEntityException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(courses, HttpStatus.OK);
+    }
+
+    @GetMapping("/courses/byName")
+    public ResponseEntity<?> findByName(@RequestParam(name = "name") String name) {
+        List<CourseDto> courses = findCoursesByNameApplicationService.run(name);
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
