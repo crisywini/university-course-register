@@ -2,6 +2,7 @@ package co.perficient.university.controllers;
 
 import co.perficient.university.application.service.course.*;
 import co.perficient.university.exception.NullEntityException;
+import co.perficient.university.exception.ParamNotFoundException;
 import co.perficient.university.exception.RepeatedEntityException;
 import co.perficient.university.model.*;
 import co.perficient.university.model.dto.CourseDto;
@@ -64,9 +65,14 @@ public class CourseController {
     }
 
     @GetMapping("/courses/byAcademicLevel")
-    public ResponseEntity<List<CourseDto>> findByAcademicLevel(@RequestParam(name = "academic_level") AcademicLevel academicLevel) {
-
-        return new ResponseEntity<>(findCourseByAcademicLevelApplicationService.run(academicLevel), HttpStatus.OK);
+    public ResponseEntity<?> findByAcademicLevel(@RequestParam(name = "academic_level") String academicLevel) {
+        List<CourseDto> courses = null;
+        try {
+            courses = findCourseByAcademicLevelApplicationService.run(AcademicLevel.of(academicLevel));
+        } catch (ParamNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
 
