@@ -162,5 +162,4 @@ public class CourseController {
         }
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }
-
 }
