@@ -29,7 +29,6 @@ public class CourseController {
     private final FindCoursesByNameApplicationService findCoursesByNameApplicationService;
     private final FindCoursesByFacultyApplicationService findCoursesByFacultyApplicationService;
 
-
     public CourseController(SaveCourseApplicationService saveCourseApplicationService,
                             FindCourseByIdApplicationService findCourseByIdApplicationService,
                             FindAllCoursesApplicationService findAllCoursesApplicationService,
@@ -58,7 +57,7 @@ public class CourseController {
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity<?> save(@RequestBody Course course) {
-        CourseDto saved = null;
+        CourseDto saved;
         try {
             saved = saveCourseApplicationService.run(course);
         } catch (RepeatedEntityException e) {
@@ -79,7 +78,7 @@ public class CourseController {
 
     @GetMapping("/courses/byAcademicLevel")
     public ResponseEntity<?> findByAcademicLevel(@RequestParam(name = "academic_level") String academicLevel) {
-        List<CourseDto> courses = null;
+        List<CourseDto> courses;
         try {
             courses = findCourseByAcademicLevelApplicationService.run(AcademicLevel.of(academicLevel));
         } catch (ParamNotFoundException e) {
@@ -90,7 +89,7 @@ public class CourseController {
 
     @GetMapping("/courses/byFaculty")
     public ResponseEntity<?> findByFaculty(@RequestParam(name = "faculty") String faculty) {
-        List<CourseDto> courses = null;
+        List<CourseDto> courses;
         try {
             courses = findCoursesByFacultyApplicationService.run(Faculty.of(faculty));
         } catch (ParamNotFoundException e) {
@@ -101,7 +100,7 @@ public class CourseController {
 
     @GetMapping("/courses/byModality")
     public ResponseEntity<?> findByModality(@RequestParam(name = "modality") String modality) {
-        List<CourseDto> courses = null;
+        List<CourseDto> courses;
         try {
             courses = findCoursesByModalityApplicationService.run(Modality.of(modality));
         } catch (ParamNotFoundException e) {
@@ -112,7 +111,7 @@ public class CourseController {
 
     @GetMapping("/courses/byUser")
     public ResponseEntity<?> findByUser(@RequestParam(name = "user") String user) {
-        List<CourseDto> courses = null;
+        List<CourseDto> courses;
         try {
             courses = findCoursesByUserApplicationService.run(user);
         } catch (NullEntityException e) {
@@ -154,7 +153,7 @@ public class CourseController {
     @RequestMapping(value = "/{id}/update", method = RequestMethod.PUT)
     public ResponseEntity<?> update(@PathVariable Long id,
                                     @RequestBody Course course) {
-        CourseDto updated = null;
+        CourseDto updated;
         try {
             updated = updateCourseApplicationService.run(id, course);
         } catch (NullEntityException e) {

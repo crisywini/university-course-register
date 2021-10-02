@@ -71,16 +71,16 @@ public class CourseSubjectRepositoryImpl implements CourseSubjectRepository {
 
     @Override
     public List<CourseSubjectDto> findByName(String name) {
-        return null;
+        return courseSubjectJPARepository.findByName(name);
     }
 
     @Override
     public List<CourseSubjectDto> findByCourse(Long courseId) {
-        return null;
+        return courseSubjectJPARepository.findByCourse(courseId);
     }
 
     @Override
     public List<CourseSubjectDto> findByMethodology(Methodology methodology) {
-        return null;
+        return courseSubjectJPARepository.findByMethodology(methodology);
     }
 }
