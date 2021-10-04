@@ -7,6 +7,8 @@ import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.port.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,7 +32,7 @@ public class UserRepositoryImpl implements UserRepository, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userJPARepository.findByEmail(s);
+        User user = findByEmail(s);
         if (user == null) {
             throw new UsernameNotFoundException("The user name was not found!");
         }
@@ -95,6 +97,12 @@ public class UserRepositoryImpl implements UserRepository, UserDetailsService {
     @Override
     public List<UserDto> findByFirstName(String name) {
         return userJPARepository.findByFirstName(name);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        Page<User> page = userJPARepository.findByEmail(email, PageRequest.of(0, 1));
+        return page.stream().findFirst().orElse(null);
     }
 
 }

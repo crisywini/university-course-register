@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface UserRepository extends CrudRepository<User, UserDto, String> {
     List<UserDto> findByRole(Role role);
-
     List<UserDto> findByFirstName(String name);
+    User findByEmail(String email);
 }
