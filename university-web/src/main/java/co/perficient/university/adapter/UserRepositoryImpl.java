@@ -5,18 +5,38 @@ import co.perficient.university.model.Role;
 import co.perficient.university.model.User;
 import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.port.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
-public class UserRepositoryImpl implements UserRepository {
+@RequiredArgsConstructor
+@Slf4j
+public class UserRepositoryImpl implements UserRepository, UserDetailsService {
     private final UserJPARepository userJPARepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserRepositoryImpl(UserJPARepository userJPARepository) {
-        this.userJPARepository = userJPARepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        User user = userJPARepository.findByEmail(s);
+        if (user == null) {
+            throw new UsernameNotFoundException("The user name was not found!");
+        }
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
     }
 
     @Override
@@ -38,7 +58,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public UserDto save(User object) {
+        object.setPassword(passwordEncoder.encode(object.getPassword()));
         User user = userJPARepository.save(object);
+
         return new UserDto(user.getId(),
                 user.getEmail(),
                 user.getFirstName(),
@@ -67,11 +89,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<UserDto> findByRole(Role role) {
-        return null;
+        return userJPARepository.findByRole(role);
     }
 
     @Override
     public List<UserDto> findByFirstName(String name) {
-        return null;
+        return userJPARepository.findByFirstName(name);
     }
+
 }

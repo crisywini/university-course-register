@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping(path = "/user")
+@RequestMapping(path = "/api/user")
 public class UserController {
     private final SaveUserApplicationService saveUserApplicationService;
     private final DeleteUserApplicationService deleteUserApplicationService;
@@ -83,11 +83,11 @@ public class UserController {
 
     @RequestMapping(value = "/{id}/update", method = RequestMethod.PUT)
     public ResponseEntity<?> update(@PathVariable String id,
-                          @RequestBody User newUser) {
+                                    @RequestBody User newUser) {
         UserDto updated = null;
-        try{
+        try {
             updated = updateUserApplicationService.run(id, newUser);
-        }catch (NullEntityException e){
+        } catch (NullEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(updated, HttpStatus.OK);

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping(path = {"/course"})
+@RequestMapping(path = {"/api/course"})
 public class CourseController {
 
     private final SaveCourseApplicationService saveCourseApplicationService;
