@@ -1,6 +1,5 @@
 package co.perficient.university.util;
 
-import co.perficient.university.application.service.user.FindUserByEmailApplicationService;
 import co.perficient.university.application.service.user.UserApplicationService;
 import co.perficient.university.model.User;
 import com.auth0.jwt.JWT;
