@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface CourseJPARepository extends JpaRepository<Course, Long> {
     @Query("SELECT new co.perficient.university.model.dto.CourseDto(c.id, c.name, c.title, c.academicLevel, c.faculty, c.modality) \n" +
-            "FROM Course c WHERE c.name = :name")
+            "FROM Course c WHERE c.name LIKE :name")
     List<CourseDto> findByName(@Param("name") String name);
 
     @Query("SELECT new co.perficient.university.model.dto.CourseDto(c.id, c.name, c.title, c.academicLevel, c.faculty, c.modality) \n" +

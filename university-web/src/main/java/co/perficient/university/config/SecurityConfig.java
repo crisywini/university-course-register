@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //Tell springboot to look for the users
+        //Tell spring boot to look for the users
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
 
         //super.configure(auth);
@@ -42,17 +42,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(STATELESS);
 
         http.authorizeRequests()
-                .antMatchers("/api/login/**", "/token/refresh/**")
+                .antMatchers("/api/login/**", "/api/users/token/refresh/**")
                 .permitAll();
+
         http.authorizeRequests()
-                .antMatchers(POST, "/api/user")
+                .antMatchers(POST, "/api/users")
                 .permitAll();
+
         http.authorizeRequests()
-                .antMatchers(GET, "/api/user/**")
+                .antMatchers(GET, "/api/**")
                 .hasAnyAuthority("MANAGER", "VIEWER");
 
         http.authorizeRequests()
-                .antMatchers(PUT, "/api/user/{id}/update")
+                .antMatchers(PUT, "/api/**")
+                .hasAnyAuthority("MANAGER");
+
+        http.authorizeRequests()
+                .antMatchers(POST, "/api/**")
+                .hasAnyAuthority("MANAGER");
+
+        http.authorizeRequests()
+                .antMatchers(DELETE, "/api/**")
                 .hasAnyAuthority("MANAGER");
 
         http.authorizeRequests().anyRequest().authenticated();

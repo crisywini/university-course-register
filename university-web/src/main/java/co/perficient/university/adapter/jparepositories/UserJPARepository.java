@@ -21,7 +21,7 @@ public interface UserJPARepository extends JpaRepository<User, String> {
     List<UserDto> findByRole(@Param("role") Role role);
 
     @Query("SELECT new co.perficient.university.model.dto.UserDto(u.id, u.email, u.firstName, u.lastName) " +
-            "FROM user_manager u WHERE u.firstName = :firstName")
+            "FROM user_manager u WHERE u.firstName LIKE :firstName")
     List<UserDto> findByFirstName(@Param("firstName") String firstName);
 
 }

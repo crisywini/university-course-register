@@ -6,6 +6,7 @@ import co.perficient.university.exception.ParamNotFoundException;
 import co.perficient.university.exception.RepeatedEntityException;
 import co.perficient.university.model.*;
 import co.perficient.university.model.dto.CourseDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,8 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping(path = {"/api/course"})
+@RequestMapping(path = {"/api/courses"})
+@RequiredArgsConstructor
 public class CourseController {
 
     private final SaveCourseApplicationService saveCourseApplicationService;
@@ -29,31 +31,6 @@ public class CourseController {
     private final FindCoursesByNameApplicationService findCoursesByNameApplicationService;
     private final FindCoursesByFacultyApplicationService findCoursesByFacultyApplicationService;
 
-    public CourseController(SaveCourseApplicationService saveCourseApplicationService,
-                            FindCourseByIdApplicationService findCourseByIdApplicationService,
-                            FindAllCoursesApplicationService findAllCoursesApplicationService,
-                            DeleteCourseByIdApplicationService deleteCourseByIdApplicationService,
-                            DeleteCourseApplicationService deleteCourseApplicationService,
-                            UpdateCourseApplicationService updateCourseApplicationService,
-                            FindCourseByAcademicLevelApplicationService findCourseByAcademicLevelApplicationService,
-                            FindCoursesByUserApplicationService findCoursesByUserApplicationService,
-                            FindCoursesByModalityApplicationService findCoursesByModalityApplicationService,
-                            FindCoursesByNameApplicationService findCoursesByNameApplicationService,
-                            FindCoursesByFacultyApplicationService findCoursesByFacultyApplicationService) {
-        this.saveCourseApplicationService = saveCourseApplicationService;
-        this.findCourseByIdApplicationService = findCourseByIdApplicationService;
-        this.findAllCoursesApplicationService = findAllCoursesApplicationService;
-        this.deleteCourseByIdApplicationService = deleteCourseByIdApplicationService;
-        this.deleteCourseApplicationService = deleteCourseApplicationService;
-        this.updateCourseApplicationService = updateCourseApplicationService;
-        this.findCourseByAcademicLevelApplicationService = findCourseByAcademicLevelApplicationService;
-        this.findCoursesByNameApplicationService = findCoursesByNameApplicationService;
-        this.findCoursesByUserApplicationService = findCoursesByUserApplicationService;
-        this.findCoursesByModalityApplicationService = findCoursesByModalityApplicationService;
-        this.findCoursesByFacultyApplicationService = findCoursesByFacultyApplicationService;
-
-    }
-
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity<?> save(@RequestBody Course course) {
@@ -66,18 +43,18 @@ public class CourseController {
         return new ResponseEntity<>(saved, HttpStatus.OK);
     }
 
-    @GetMapping("/courses")
+    @GetMapping
     public ResponseEntity<Set<CourseDto>> findAll() {
         return new ResponseEntity<>(findAllCoursesApplicationService.run(), HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<CourseDto> findById(@RequestParam(name = "id") Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<CourseDto> findById(@PathVariable(name = "id") Long id) {
         return new ResponseEntity<>(findCourseByIdApplicationService.run(id), HttpStatus.OK);
     }
 
-    @GetMapping("/courses/byAcademicLevel")
-    public ResponseEntity<?> findByAcademicLevel(@RequestParam(name = "academic_level") String academicLevel) {
+    @GetMapping("/academic_level/{academic_level}")
+    public ResponseEntity<?> findByAcademicLevel(@PathVariable(name = "academic_level") String academicLevel) {
         List<CourseDto> courses;
         try {
             courses = findCourseByAcademicLevelApplicationService.run(AcademicLevel.of(academicLevel));
@@ -87,8 +64,8 @@ public class CourseController {
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
-    @GetMapping("/courses/byFaculty")
-    public ResponseEntity<?> findByFaculty(@RequestParam(name = "faculty") String faculty) {
+    @GetMapping("/faculty/{faculty}")
+    public ResponseEntity<?> findByFaculty(@PathVariable(name = "faculty") String faculty) {
         List<CourseDto> courses;
         try {
             courses = findCoursesByFacultyApplicationService.run(Faculty.of(faculty));
@@ -98,8 +75,8 @@ public class CourseController {
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
-    @GetMapping("/courses/byModality")
-    public ResponseEntity<?> findByModality(@RequestParam(name = "modality") String modality) {
+    @GetMapping("/modality/{modality}")
+    public ResponseEntity<?> findByModality(@PathVariable(name = "modality") String modality) {
         List<CourseDto> courses;
         try {
             courses = findCoursesByModalityApplicationService.run(Modality.of(modality));
@@ -109,8 +86,8 @@ public class CourseController {
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
-    @GetMapping("/courses/byUser")
-    public ResponseEntity<?> findByUser(@RequestParam(name = "user") String user) {
+    @GetMapping("/user/{user}")
+    public ResponseEntity<?> findByUser(@PathVariable(name = "user") String user) {
         List<CourseDto> courses;
         try {
             courses = findCoursesByUserApplicationService.run(user);
@@ -120,14 +97,13 @@ public class CourseController {
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
-    @GetMapping("/courses/byName")
-    public ResponseEntity<?> findByName(@RequestParam(name = "name") String name) {
-        List<CourseDto> courses = findCoursesByNameApplicationService.run(name);
+    @GetMapping("/name/{name}")
+    public ResponseEntity<?> findByName(@PathVariable(name = "name") String name) {
+        List<CourseDto> courses = findCoursesByNameApplicationService.run("%" + name + "%");
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
-
-    @DeleteMapping("/course")
+    @DeleteMapping
     public ResponseEntity<String> delete(@RequestBody Course course) {
         try {
             deleteCourseApplicationService.run(course);
@@ -138,8 +114,8 @@ public class CourseController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> deleteById(@RequestParam(name = "id") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteById(@PathVariable(name = "id") Long id) {
         try {
             deleteCourseByIdApplicationService.run(id);
         } catch (NullEntityException e) {
@@ -150,7 +126,7 @@ public class CourseController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> update(@PathVariable Long id,
                                     @RequestBody Course course) {
         CourseDto updated;

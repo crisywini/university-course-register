@@ -35,7 +35,7 @@ public class Util {
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(token);
                 String userName = decodedJWT.getSubject();// Gonne give the username that comes with the token
-                String[] roles = decodedJWT.getClaim("roles ").asArray(String.class);
+                String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
                 Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
                 stream(roles).forEach(role -> {
                     authorities.add(new SimpleGrantedAuthority(role));
@@ -46,7 +46,6 @@ public class Util {
                 filterChain.doFilter(request, response);
             } catch (Exception e) {
                 response.setHeader("error", e.getMessage());
-                e.printStackTrace();
                 response.setStatus(FORBIDDEN.value());
                 Map<String, String> error = new HashMap<>();
                 error.put("error_message", e.getMessage());
