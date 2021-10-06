@@ -19,22 +19,14 @@ import java.util.Set;
 @RequestMapping(path = {"/api/course_subjects"})
 @RequiredArgsConstructor
 public class CourseSubjectController {
-    private final SaveCourseSubjectApplicationService saveCourseSubjectApplicationService;
-    private final FindCourseSubjectByIdApplicationService findCourseSubjectByIdApplicationService;
-    private final FindAllCourseSubjectsApplicationService findAllCourseSubjectsApplicationService;
-    private final DeleteCourseSubjectApplicationService deleteCourseSubjectApplicationService;
-    private final DeleteCourseSubjectByIdApplicationService deleteCourseSubjectByIdApplicationService;
-    private final UpdateCourseSubjectApplicationService updateCourseSubjectApplicationService;
-    private final FindCourseSubjectByNameApplicationService findCourseSubjectByNameApplicationService;
-    private final FindCourseSubjectByMethodologyApplicationService findCourseSubjectByMethodologyApplicationService;
-    private final FindCourseSubjectByCourseApplicationService findCourseSubjectByCourseApplicationService;
+    private final CourseSubjectApplicationService courseSubjectApplicationService;
 
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity<?> save(@RequestBody CourseSubject courseSubject) {
         CourseSubjectDto saved;
         try {
-            saved = saveCourseSubjectApplicationService.run(courseSubject);
+            saved = courseSubjectApplicationService.save(courseSubject);
         } catch (RepeatedEntityException | NullEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
@@ -43,18 +35,18 @@ public class CourseSubjectController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CourseSubjectDto> findById(@PathVariable(name = "id") Long id) {
-        return new ResponseEntity<>(findCourseSubjectByIdApplicationService.run(id), HttpStatus.OK);
+        return new ResponseEntity<>(courseSubjectApplicationService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<Set<CourseSubjectDto>> findAll() {
-        return new ResponseEntity<>(findAllCourseSubjectsApplicationService.run(), HttpStatus.OK);
+        return new ResponseEntity<>(courseSubjectApplicationService.findAll(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteById(@PathVariable(name = "id") Long id) {
         try {
-            deleteCourseSubjectByIdApplicationService.run(id);
+            courseSubjectApplicationService.deleteById(id);
         } catch (NullEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -65,7 +57,7 @@ public class CourseSubjectController {
     @DeleteMapping
     public ResponseEntity<String> delete(@RequestBody CourseSubject courseSubject) {
         try {
-            deleteCourseSubjectApplicationService.run(courseSubject);
+            courseSubjectApplicationService.delete(courseSubject);
         } catch (NullEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -78,7 +70,7 @@ public class CourseSubjectController {
                                     @RequestBody CourseSubject courseSubject) {
         CourseSubjectDto updated;
         try {
-            updated = updateCourseSubjectApplicationService.run(id, courseSubject);
+            updated = courseSubjectApplicationService.update(id, courseSubject);
         } catch (NullEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -87,7 +79,7 @@ public class CourseSubjectController {
 
     @GetMapping("/name/{name}")
     public ResponseEntity<?> findByName(@PathVariable("name") String name) {
-        return new ResponseEntity<>(findCourseSubjectByNameApplicationService.run("%" + name + "%"), HttpStatus.OK);
+        return new ResponseEntity<>(courseSubjectApplicationService.findByName("%" + name + "%"), HttpStatus.OK);
     }
 
     @GetMapping("/course/{course}")
@@ -96,7 +88,7 @@ public class CourseSubjectController {
         try {
             String course = courseId + "";
             courseId = Long.parseLong(course);
-            byCourse = findCourseSubjectByCourseApplicationService.run(courseId);
+            byCourse = courseSubjectApplicationService.findByCourse(courseId);
         } catch (NullEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -107,7 +99,7 @@ public class CourseSubjectController {
     public ResponseEntity<?> findByMethodology(@PathVariable("methodology") String methodology) {
         List<CourseSubjectDto> byMethodology;
         try {
-            byMethodology = findCourseSubjectByMethodologyApplicationService.run(Methodology.of(methodology));
+            byMethodology = courseSubjectApplicationService.findByMethodology(Methodology.of(methodology));
         } catch (ParamNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

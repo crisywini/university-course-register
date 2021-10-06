@@ -23,15 +23,7 @@ import java.util.*;
 @RequestMapping(path = "/api/users")
 @RequiredArgsConstructor
 public class UserController {
-    private final SaveUserApplicationService saveUserApplicationService;
-    private final DeleteUserApplicationService deleteUserApplicationService;
-    private final DeleteUserByIdApplicationService deleteUserByIdApplicationService;
-    private final FindUserByIdApplicationService findUserByIdApplicationService;
-    private final FindAllUsersApplicationService findAllUsersApplicationService;
-    private final UpdateUserApplicationService updateUserApplicationService;
-    private final FindUserByEmailApplicationService findUserByEmailApplicationService;
-    private final FindUserByFirstNameApplicationService findUserByFirstNameApplicationService;
-    private final FindUserByRoleApplicationService findUserByRoleApplicationService;
+    private final UserApplicationService userApplicationService;
 
 
     @PostMapping(consumes = "application/json")
@@ -39,7 +31,7 @@ public class UserController {
 
         UserDto saved;
         try {
-            saved = saveUserApplicationService.run(user);
+            saved = userApplicationService.save(user);
         } catch (RepeatedEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
@@ -48,24 +40,24 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Set<UserDto>> findAll() {
-        return new ResponseEntity<>(findAllUsersApplicationService.run(), HttpStatus.OK);
+        return new ResponseEntity<>(userApplicationService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> findById(@PathVariable(name = "id") String id) {
-        return new ResponseEntity<>(findUserByIdApplicationService.run(id), HttpStatus.OK);
+        return new ResponseEntity<>(userApplicationService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/name/{name}")
     public ResponseEntity<List<UserDto>> findByFirstName(@PathVariable(name = "name") String name) {
-        return new ResponseEntity<>(findUserByFirstNameApplicationService.run("%" + name + "%"), HttpStatus.OK);
+        return new ResponseEntity<>(userApplicationService.findByFirstName("%" + name + "%"), HttpStatus.OK);
     }
 
     @GetMapping("/role/{role}")
     public ResponseEntity<?> findByRole(@PathVariable(name = "role") String role) {
         List<UserDto> users;
         try {
-            users = findUserByRoleApplicationService.run(Role.of(role));
+            users = userApplicationService.findByRole(Role.of(role));
         } catch (ParamNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -76,7 +68,7 @@ public class UserController {
     @DeleteMapping
     public ResponseEntity<String> delete(@RequestBody User user) {
         try {
-            deleteUserApplicationService.run(user);
+            userApplicationService.delete(user);
         } catch (NullEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -87,7 +79,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteById(@PathVariable(name = "id") String id) {
         try {
-            deleteUserByIdApplicationService.run(id);
+            userApplicationService.deleteById(id);
         } catch (NullEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -100,7 +92,7 @@ public class UserController {
                                     @RequestBody User newUser) {
         UserDto updated;
         try {
-            updated = updateUserApplicationService.run(id, newUser);
+            updated = userApplicationService.update(id, newUser);
         } catch (NullEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -109,7 +101,7 @@ public class UserController {
 
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Util.processAuthorizationToRefreshToken(request, response, findUserByEmailApplicationService);
+        Util.processAuthorizationToRefreshToken(request, response, userApplicationService);
     }
 
 }

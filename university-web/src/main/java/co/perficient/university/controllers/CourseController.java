@@ -19,24 +19,13 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class CourseController {
 
-    private final SaveCourseApplicationService saveCourseApplicationService;
-    private final FindCourseByIdApplicationService findCourseByIdApplicationService;
-    private final FindAllCoursesApplicationService findAllCoursesApplicationService;
-    private final DeleteCourseByIdApplicationService deleteCourseByIdApplicationService;
-    private final DeleteCourseApplicationService deleteCourseApplicationService;
-    private final UpdateCourseApplicationService updateCourseApplicationService;
-    private final FindCourseByAcademicLevelApplicationService findCourseByAcademicLevelApplicationService;
-    private final FindCoursesByUserApplicationService findCoursesByUserApplicationService;
-    private final FindCoursesByModalityApplicationService findCoursesByModalityApplicationService;
-    private final FindCoursesByNameApplicationService findCoursesByNameApplicationService;
-    private final FindCoursesByFacultyApplicationService findCoursesByFacultyApplicationService;
-
+    private final CourseApplicationService courseApplicationService;
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity<?> save(@RequestBody Course course) {
         CourseDto saved;
         try {
-            saved = saveCourseApplicationService.run(course);
+            saved = courseApplicationService.saveCourse(course);
         } catch (RepeatedEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
@@ -45,19 +34,19 @@ public class CourseController {
 
     @GetMapping
     public ResponseEntity<Set<CourseDto>> findAll() {
-        return new ResponseEntity<>(findAllCoursesApplicationService.run(), HttpStatus.OK);
+        return new ResponseEntity<>(courseApplicationService.findAllCourses(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CourseDto> findById(@PathVariable(name = "id") Long id) {
-        return new ResponseEntity<>(findCourseByIdApplicationService.run(id), HttpStatus.OK);
+        return new ResponseEntity<>(courseApplicationService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/academic_level/{academic_level}")
     public ResponseEntity<?> findByAcademicLevel(@PathVariable(name = "academic_level") String academicLevel) {
         List<CourseDto> courses;
         try {
-            courses = findCourseByAcademicLevelApplicationService.run(AcademicLevel.of(academicLevel));
+            courses = courseApplicationService.findByAcademicLevel(AcademicLevel.of(academicLevel));
         } catch (ParamNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -68,7 +57,7 @@ public class CourseController {
     public ResponseEntity<?> findByFaculty(@PathVariable(name = "faculty") String faculty) {
         List<CourseDto> courses;
         try {
-            courses = findCoursesByFacultyApplicationService.run(Faculty.of(faculty));
+            courses = courseApplicationService.findByFaculty(Faculty.of(faculty));
         } catch (ParamNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -79,7 +68,7 @@ public class CourseController {
     public ResponseEntity<?> findByModality(@PathVariable(name = "modality") String modality) {
         List<CourseDto> courses;
         try {
-            courses = findCoursesByModalityApplicationService.run(Modality.of(modality));
+            courses = courseApplicationService.findByModality(Modality.of(modality));
         } catch (ParamNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -90,7 +79,7 @@ public class CourseController {
     public ResponseEntity<?> findByUser(@PathVariable(name = "user") String user) {
         List<CourseDto> courses;
         try {
-            courses = findCoursesByUserApplicationService.run(user);
+            courses = courseApplicationService.findByUser(user);
         } catch (NullEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -99,14 +88,14 @@ public class CourseController {
 
     @GetMapping("/name/{name}")
     public ResponseEntity<?> findByName(@PathVariable(name = "name") String name) {
-        List<CourseDto> courses = findCoursesByNameApplicationService.run("%" + name + "%");
+        List<CourseDto> courses = courseApplicationService.findByName("%" + name + "%");
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
     @DeleteMapping
     public ResponseEntity<String> delete(@RequestBody Course course) {
         try {
-            deleteCourseApplicationService.run(course);
+            courseApplicationService.deleteCourse(course);
         } catch (NullEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -117,7 +106,7 @@ public class CourseController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteById(@PathVariable(name = "id") Long id) {
         try {
-            deleteCourseByIdApplicationService.run(id);
+            courseApplicationService.deleteCourseById(id);
         } catch (NullEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -131,7 +120,7 @@ public class CourseController {
                                     @RequestBody Course course) {
         CourseDto updated;
         try {
-            updated = updateCourseApplicationService.run(id, course);
+            updated = courseApplicationService.update(id, course);
         } catch (NullEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }

@@ -1,6 +1,7 @@
 package co.perficient.university.util;
 
 import co.perficient.university.application.service.user.FindUserByEmailApplicationService;
+import co.perficient.university.application.service.user.UserApplicationService;
 import co.perficient.university.model.User;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -57,7 +58,7 @@ public class Util {
         }
     }
 
-    public static void processAuthorizationToRefreshToken(HttpServletRequest request, HttpServletResponse response, FindUserByEmailApplicationService findUserByEmailApplicationService) throws IOException {
+    public static void processAuthorizationToRefreshToken(HttpServletRequest request, HttpServletResponse response, UserApplicationService userApplicationService) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
@@ -66,7 +67,7 @@ public class Util {
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refreshToken);
                 String userName = decodedJWT.getSubject();// Gonne give the username that comes with the token
-                User user = findUserByEmailApplicationService.run(userName);
+                User user = userApplicationService.findByEmail(userName);
                 String accessToken = JWT.create()
                         .withSubject(user.getEmail())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
