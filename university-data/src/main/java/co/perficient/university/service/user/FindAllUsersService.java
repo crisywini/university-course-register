@@ -19,6 +19,4 @@ public class FindAllUsersService {
     public Set<UserDto> findAll() {
         return userService.findAll();
     }
-
-
 }
