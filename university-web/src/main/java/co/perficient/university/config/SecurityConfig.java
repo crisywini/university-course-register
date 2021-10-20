@@ -49,9 +49,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(POST, "/api/users")
                 .permitAll();
 
+        /*http.authorizeRequests()
+                .antMatchers(GET, "/api/**")
+                .hasAnyAuthority("MANAGER", "VIEWER");*/
+
         http.authorizeRequests()
                 .antMatchers(GET, "/api/**")
-                .hasAnyAuthority("MANAGER", "VIEWER");
+                .permitAll();
 
         http.authorizeRequests()
                 .antMatchers(PUT, "/api/**")
@@ -65,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(DELETE, "/api/**")
                 .hasAnyAuthority("MANAGER");
 
-        http.authorizeRequests().anyRequest().authenticated();
+        //http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
         //super.configure(http);
