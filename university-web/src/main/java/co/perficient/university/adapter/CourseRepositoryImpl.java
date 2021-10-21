@@ -35,7 +35,7 @@ public class CourseRepositoryImpl implements CourseRepository {
     }
 
     @Override
-    public CourseDto findById(Long id) {
+    public CourseDto findById(Long id) {;
         Course course = courseJPARepository.findById(id).orElse(null);
         return (course != null) ? new CourseDto(course.getId(),
                 course.getName(),

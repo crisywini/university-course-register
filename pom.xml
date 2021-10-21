@@ -17,7 +17,7 @@
     <artifactId>university</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>university</name>
-    <description>This project allows to save academic courses of college students</description>
+    <description>This project allows to save academic courses of college</description>
     <properties>
         <start-class>co.perficient.university.UniversityApplication</start-class>
         <java.version>11</java.version>
@@ -42,15 +42,13 @@
             <version>2.9.2</version>
         </dependency>
     </dependencies>
-
-
     <build>
         <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.sonarsource.scanner.maven</groupId>
                     <artifactId>sonar-maven-plugin</artifactId>
-                    <version>3.8.0.2131</version>
+                    <version>3.4.0.905</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -59,8 +57,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
         </plugins>
     </build>
-
 </project>
