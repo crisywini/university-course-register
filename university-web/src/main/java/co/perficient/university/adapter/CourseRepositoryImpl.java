@@ -8,6 +8,7 @@ import co.perficient.university.port.CourseRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,14 +36,10 @@ public class CourseRepositoryImpl implements CourseRepository {
     }
 
     @Override
-    public CourseDto findById(Long id) {;
-        Course course = courseJPARepository.findById(id).orElse(null);
-        return (course != null) ? new CourseDto(course.getId(),
-                course.getName(),
-                course.getTitle(),
-                course.getAcademicLevel(),
-                course.getFaculty(),
-                course.getModality()) : null;
+    public CourseDto findById(Long id) {
+        Optional<Course> course = courseJPARepository.findById(id);
+        return (course.isPresent()) ? course.map(c -> new CourseDto(c.getId(), c.getName(), c.getTitle(),
+                c.getAcademicLevel(), c.getFaculty(), c.getModality())).get() : null;
     }
 
     @Override
