@@ -14,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Course extends BaseEntity<Course> implements Serializable {
+public class Course  implements Serializable, BaseEntity<Course> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

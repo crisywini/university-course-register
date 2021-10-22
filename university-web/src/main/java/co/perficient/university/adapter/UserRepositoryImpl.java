@@ -16,10 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
@@ -81,12 +78,11 @@ public class UserRepositoryImpl implements UserRepository, UserDetailsService {
 
     @Override
     public UserDto update(String id, User newEntity) {
-        User user = userJPARepository.findById(id).get();
-        User newUser = userJPARepository.save(user.updateWith(newEntity));
-        return new UserDto(newUser.getId(),
-                newUser.getEmail(),
-                newUser.getFirstName(),
-                newUser.getLastName());
+        Optional<User> user = userJPARepository.findById(id);
+        User newUser = user.map(s -> userJPARepository.save(s.updateWith(newEntity))).orElse(null);
+        return (newUser != null) ?
+                new UserDto(newUser.getId(), newUser.getEmail(), newUser.getFirstName(), newUser.getLastName())
+                : null;
     }
 
     @Override

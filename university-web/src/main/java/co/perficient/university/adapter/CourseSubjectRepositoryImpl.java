@@ -8,6 +8,7 @@ import co.perficient.university.port.CourseSubjectRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,10 +35,10 @@ public class CourseSubjectRepositoryImpl implements CourseSubjectRepository {
     @Override
     public CourseSubjectDto findById(Long id) {
         CourseSubject courseSubject = courseSubjectJPARepository.findById(id).orElse(null);
-        return new CourseSubjectDto(courseSubject.getId(),
-                courseSubject.getDescription(),
-                courseSubject.getName(),
-                courseSubject.getMethodology());
+
+        return (courseSubject != null) ?
+                new CourseSubjectDto(courseSubject.getId(), courseSubject.getDescription(),
+                        courseSubject.getName(), courseSubject.getMethodology()) : null;
     }
 
     @Override
@@ -61,12 +62,12 @@ public class CourseSubjectRepositoryImpl implements CourseSubjectRepository {
 
     @Override
     public CourseSubjectDto update(Long id, CourseSubject newEntity) {
-        CourseSubject courseSubject = courseSubjectJPARepository.findById(id).get();
-        CourseSubject updatedCourseSubject = courseSubjectJPARepository.save(courseSubject.updateWith(newEntity));
-        return new CourseSubjectDto(updatedCourseSubject.getId(),
-                updatedCourseSubject.getDescription(),
-                updatedCourseSubject.getName(),
-                courseSubject.getMethodology());
+        Optional<CourseSubject> courseSubject = courseSubjectJPARepository.findById(id);
+        CourseSubject updatedCourseSubject = courseSubject
+                .map(subject -> courseSubjectJPARepository.save(subject.updateWith(newEntity))).orElse(null);
+        return (updatedCourseSubject != null) ?
+                new CourseSubjectDto(updatedCourseSubject.getId(), updatedCourseSubject.getDescription(),
+                        updatedCourseSubject.getName(), updatedCourseSubject.getMethodology()) : null;
     }
 
     @Override

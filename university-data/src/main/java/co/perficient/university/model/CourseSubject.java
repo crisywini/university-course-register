@@ -13,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class CourseSubject extends BaseEntity<CourseSubject> implements Serializable {
+public class CourseSubject implements Serializable, BaseEntity<CourseSubject> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

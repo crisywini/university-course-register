@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "user_manager")
-public class User extends BaseEntity<User> implements Serializable {
+public class User implements Serializable, BaseEntity<User> {
 
     @Id
     @EqualsAndHashCode.Include
