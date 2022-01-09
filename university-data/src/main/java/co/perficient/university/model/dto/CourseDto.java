@@ -4,11 +4,12 @@ import co.perficient.university.model.AcademicLevel;
 import co.perficient.university.model.Faculty;
 import co.perficient.university.model.Modality;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

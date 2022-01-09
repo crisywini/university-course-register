@@ -21,7 +21,7 @@ public class DeleteCoursesService {
     }
 
     private void validateExisting(Course course) {
-        if (courseRepository.findById(course.getId()) == null) {
+        if (courseRepository.findById(course.getId()).isEmpty()) {
             throw new NullEntityException(NON_EXISTING_COURSE_MESSAGE);
         }
     }

@@ -6,6 +6,7 @@ import co.perficient.university.exception.ParamNotFoundException;
 import co.perficient.university.exception.RepeatedEntityException;
 import co.perficient.university.model.*;
 import co.perficient.university.model.dto.CourseDto;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class CourseController {
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity<?> save(@RequestBody Course course) {
-        CourseDto saved;
+        Optional<CourseDto> saved;
         try {
             saved = courseApplicationService.saveCourse(course);
         } catch (RepeatedEntityException e) {
@@ -38,7 +39,7 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CourseDto> findById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<Optional<CourseDto>> findById(@PathVariable(name = "id") Long id) {
         return new ResponseEntity<>(courseApplicationService.findById(id), HttpStatus.OK);
     }
 
@@ -115,10 +116,10 @@ public class CourseController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public ResponseEntity<?> update(@PathVariable Long id,
                                     @RequestBody Course course) {
-        CourseDto updated;
+        Optional<CourseDto> updated;
         try {
             updated = courseApplicationService.update(id, course);
         } catch (NullEntityException e) {

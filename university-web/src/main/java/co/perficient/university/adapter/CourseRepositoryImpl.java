@@ -5,6 +5,7 @@ import co.perficient.university.model.*;
 import co.perficient.university.model.dto.CourseDto;
 import co.perficient.university.model.dto.CourseSubjectDto;
 import co.perficient.university.port.CourseRepository;
+import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -35,21 +36,27 @@ public class CourseRepositoryImpl implements CourseRepository {
     }
 
     @Override
-    public CourseDto findById(Long id) {
-        Course course = courseJPARepository.findById(id).orElse(null);
-        return (course != null) ? new CourseDto(course.getId(), course.getName(), course.getTitle(),
-                course.getAcademicLevel(), course.getFaculty(), course.getModality()) : null;
+    public Optional<CourseDto> findById(Long id) {
+        return courseJPARepository.findById(id).map(c -> CourseDto.builder()
+                .id(c.getId())
+                .name(c.getName())
+                .title(c.getTitle())
+                .academicLevel(c.getAcademicLevel())
+                .faculty(c.getFaculty())
+                .modality(c.getModality())
+                .build());
     }
 
     @Override
-    public CourseDto save(Course object) {
-        Course course = courseJPARepository.save(object);
-        return new CourseDto(course.getId(),
-                course.getName(),
-                course.getTitle(),
-                course.getAcademicLevel(),
-                course.getFaculty(),
-                course.getModality());
+    public Optional<CourseDto> save(Course object) {
+        return Optional.of(courseJPARepository.save(object)).map(c -> CourseDto.builder()
+                .id(c.getId())
+                .name(c.getName())
+                .title(c.getTitle())
+                .academicLevel(c.getAcademicLevel())
+                .faculty(c.getFaculty())
+                .modality(c.getModality())
+                .build());
     }
 
     @Override
@@ -63,19 +70,20 @@ public class CourseRepositoryImpl implements CourseRepository {
     }
 
     @Override
-    public CourseDto update(Long id, Course newEntity) {
+    public Optional<CourseDto> update(Long id, Course newEntity) {
         Course course = courseJPARepository.findById(id).orElse(new Course());
-        Course updatedCourse = courseJPARepository.save(course.updateWith(newEntity));
-        return new CourseDto(updatedCourse.getId(),
-                updatedCourse.getName(),
-                updatedCourse.getTitle(),
-                updatedCourse.getAcademicLevel(),
-                updatedCourse.getFaculty(),
-                updatedCourse.getModality());
+        return Optional.of(courseJPARepository.save(course.updateWith(newEntity))).map(c -> CourseDto.builder()
+                .id(c.getId())
+                .name(c.getName())
+                .title(c.getTitle())
+                .academicLevel(c.getAcademicLevel())
+                .faculty(c.getFaculty())
+                .modality(c.getModality())
+                .build());
     }
 
     @Override
-    public CourseSubjectDto addCourseSubject(Long courseId, CourseSubject courseSubject) {
+    public Optional<CourseSubjectDto> addCourseSubject(Long courseId, CourseSubject courseSubject) {
         return null;
     }
 
@@ -103,4 +111,5 @@ public class CourseRepositoryImpl implements CourseRepository {
     public List<CourseDto> findByModality(Modality modality) {
         return courseJPARepository.findByModality(modality);
     }
+
 }

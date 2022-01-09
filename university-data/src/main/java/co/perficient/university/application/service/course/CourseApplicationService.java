@@ -6,6 +6,7 @@ import co.perficient.university.model.Faculty;
 import co.perficient.university.model.Modality;
 import co.perficient.university.model.dto.CourseDto;
 import co.perficient.university.service.course.*;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class CourseApplicationService {
     private final FindCourseByUserService findCourseByUserService;
     private final UpdateCourseService updateCourseService;
 
-    public CourseDto saveCourse(Course course) {
+    public Optional<CourseDto> saveCourse(Course course) {
         return saveCourseService.save(course);
     }
 
@@ -51,7 +52,7 @@ public class CourseApplicationService {
         return findCourseByFacultyService.findByFaculty(faculty);
     }
 
-    public CourseDto findById(Long id) {
+    public Optional<CourseDto> findById(Long id) {
         return findCourseByIdService.findById(id);
     }
 
@@ -67,7 +68,7 @@ public class CourseApplicationService {
         return findCourseByUserService.findByUser(userId);
     }
 
-    public CourseDto update(Long id, Course course) {
+    public Optional<CourseDto> update(Long id, Course course) {
         return updateCourseService.update(id, course);
     }
 
