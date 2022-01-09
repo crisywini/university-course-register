@@ -4,6 +4,7 @@ import co.perficient.university.model.Role;
 import co.perficient.university.model.User;
 import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.service.user.*;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class UserApplicationService {
     private final SaveUserService saveUserService;
     private final UpdateUserService updateUserService;
 
-    public UserDto save(User user) {
+    public Optional<UserDto> save(User user) {
         return saveUserService.save(user);
     }
 
@@ -39,7 +40,7 @@ public class UserApplicationService {
         return findAllUsersService.findAll();
     }
 
-    public User findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return findUserByEmailService.findByEmail(email);
     }
 
@@ -47,7 +48,7 @@ public class UserApplicationService {
         return findUserByFirstNameService.findByFirstName(name);
     }
 
-    public UserDto findById(String id) {
+    public Optional<UserDto> findById(String id) {
         return findUserByIdService.findById(id);
     }
 
@@ -55,7 +56,7 @@ public class UserApplicationService {
         return findUserByRoleService.findByRole(role);
     }
 
-    public UserDto update(String id, User user) {
+    public Optional<UserDto> update(String id, User user) {
         return updateUserService.update(id, user);
     }
 

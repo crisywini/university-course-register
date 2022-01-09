@@ -11,7 +11,8 @@ import java.util.List;
 @Service
 public class FindUserByRoleService {
     private final UserRepository userRepository;
-    private final static String ROLE_DEFAULT_MESSAGE = "The role was not found";
+
+    private static final String ROLE_DEFAULT_MESSAGE = "The role was not found";
 
     public FindUserByRoleService(UserRepository userRepository) {
         this.userRepository = userRepository;

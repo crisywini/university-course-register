@@ -29,7 +29,7 @@ public class UserController {
     @PostMapping(consumes = "application/json")
     public ResponseEntity<?> save(@RequestBody User user) {
 
-        UserDto saved;
+        Optional<UserDto> saved;
         try {
             saved = userApplicationService.save(user);
         } catch (RepeatedEntityException e) {
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> findById(@PathVariable(name = "id") String id) {
+    public ResponseEntity<Optional<UserDto>> findById(@PathVariable(name = "id") String id) {
         return new ResponseEntity<>(userApplicationService.findById(id), HttpStatus.OK);
     }
 
@@ -87,10 +87,10 @@ public class UserController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public ResponseEntity<?> update(@PathVariable String id,
                                     @RequestBody User newUser) {
-        UserDto updated;
+        Optional<UserDto> updated;
         try {
             updated = userApplicationService.update(id, newUser);
         } catch (NullEntityException e) {

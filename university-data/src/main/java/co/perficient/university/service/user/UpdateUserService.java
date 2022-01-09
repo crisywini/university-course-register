@@ -4,6 +4,7 @@ import co.perficient.university.exception.NullEntityException;
 import co.perficient.university.model.User;
 import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.port.UserRepository;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,13 +16,13 @@ public class UpdateUserService {
         this.userRepository = userRepository;
     }
 
-    public UserDto update(String id, User newUser) {
+    public Optional<UserDto> update(String id, User newUser) {
         validateExistingUser(id);
         return userRepository.update(id, newUser);
     }
 
     private void validateExistingUser(String id) {
-        if (userRepository.findById(id) == null) {
+        if (userRepository.findById(id).isEmpty()) {
             throw new NullEntityException(NON_EXISTING_USER_MESSAGE);
         }
     }

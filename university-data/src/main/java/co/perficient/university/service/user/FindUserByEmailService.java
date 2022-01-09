@@ -2,6 +2,7 @@ package co.perficient.university.service.user;
 
 import co.perficient.university.model.User;
 import co.perficient.university.port.UserRepository;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,7 +13,7 @@ public class FindUserByEmailService {
         this.userRepository = userRepository;
     }
 
-    public User findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 }

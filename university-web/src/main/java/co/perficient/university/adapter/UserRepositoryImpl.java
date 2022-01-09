@@ -1,6 +1,7 @@
 package co.perficient.university.adapter;
 
 import co.perficient.university.adapter.jparepositories.UserJPARepository;
+import co.perficient.university.exception.NullEntityException;
 import co.perficient.university.model.Role;
 import co.perficient.university.model.User;
 import co.perficient.university.model.dto.UserDto;
@@ -23,16 +24,15 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class UserRepositoryImpl implements UserRepository, UserDetailsService {
+
     private final UserJPARepository userJPARepository;
+
     private final PasswordEncoder passwordEncoder;
 
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = findByEmail(s);
-        if (user == null) {
-            throw new UsernameNotFoundException("The user name was not found!");
-        }
+        User user = findByEmail(s).orElseThrow(() -> new UsernameNotFoundException("The user name was not found!"));
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
@@ -47,23 +47,29 @@ public class UserRepositoryImpl implements UserRepository, UserDetailsService {
     }
 
     @Override
-    public UserDto findById(String id) {
-        User user = userJPARepository.findById(id).orElse(null);
-        return (user != null) ? new UserDto(user.getId(),
-                user.getEmail(),
-                user.getFirstName(),
-                user.getLastName()) : null;
+    public Optional<UserDto> findById(String id) {
+        UserDto userDto = userJPARepository.findById(id).map(u -> UserDto.builder()
+                        .id(u.getId())
+                        .lastName(u.getLastName())
+                        .email(u.getEmail())
+                        .firstName(u.getFirstName())
+                        .build())
+                .orElseThrow(() -> new NullEntityException("User not found"));
+
+        return Optional.of(userDto);
     }
 
     @Override
-    public UserDto save(User object) {
+    public Optional<UserDto> save(User object) {
         object.setPassword(passwordEncoder.encode(object.getPassword()));
         User user = userJPARepository.save(object);
 
-        return new UserDto(user.getId(),
-                user.getEmail(),
-                user.getFirstName(),
-                user.getLastName());
+        return Optional.of(UserDto.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .build());
     }
 
     @Override
@@ -77,12 +83,16 @@ public class UserRepositoryImpl implements UserRepository, UserDetailsService {
     }
 
     @Override
-    public UserDto update(String id, User newEntity) {
-        Optional<User> user = userJPARepository.findById(id);
-        User newUser = user.map(s -> userJPARepository.save(s.updateWith(newEntity))).orElse(null);
-        return (newUser != null) ?
-                new UserDto(newUser.getId(), newUser.getEmail(), newUser.getFirstName(), newUser.getLastName())
-                : null;
+    public Optional<UserDto> update(String id, User newEntity) {
+        return userJPARepository.findById(id).map(s -> {
+            User save = userJPARepository.save(s.updateWith(newEntity));
+            return UserDto.builder()
+                    .id(save.getId())
+                    .email(save.getEmail())
+                    .firstName(save.getFirstName())
+                    .lastName(save.getLastName())
+                    .build();
+        });
     }
 
     @Override
@@ -96,9 +106,9 @@ public class UserRepositoryImpl implements UserRepository, UserDetailsService {
     }
 
     @Override
-    public User findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         Page<User> page = userJPARepository.findByEmail(email, PageRequest.of(0, 1));
-        return page.stream().findFirst().orElse(null);
+        return page.stream().findFirst();
     }
 
 }
