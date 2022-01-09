@@ -27,7 +27,6 @@ class DeleteUserByIdServiceTest {
     void setUp() {
         userRepository = Mockito.mock(UserRepository.class);
         deleteUserByIdService = new DeleteUserByIdService(userRepository);
-
     }
 
     @Test
