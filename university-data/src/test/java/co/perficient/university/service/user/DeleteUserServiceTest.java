@@ -4,6 +4,7 @@ import co.perficient.university.exception.NullEntityException;
 import co.perficient.university.model.User;
 import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.port.UserRepository;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,7 +36,7 @@ class DeleteUserServiceTest {
         userDto.setId("123");
         userDto.setFirstName("User");
         userDto.setLastName("Last name");
-        when(userRepository.findById("123")).thenReturn(userDto);
+        when(userRepository.findById("123")).thenReturn(Optional.of(userDto));
         User user = new User();
         user.setId("123");
         deleteUserService.delete(user);

@@ -66,7 +66,7 @@ public class Util {
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refreshToken);
                 String userName = decodedJWT.getSubject();// Gonne give the username that comes with the token
-                User user = userApplicationService.findByEmail(userName);
+                User user = userApplicationService.findByEmail(userName).get();
                 String accessToken = JWT.create()
                         .withSubject(user.getEmail())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))

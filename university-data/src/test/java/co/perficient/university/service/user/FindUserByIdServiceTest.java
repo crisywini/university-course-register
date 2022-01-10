@@ -2,6 +2,7 @@ package co.perficient.university.service.user;
 
 import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.port.UserRepository;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,14 +28,14 @@ class FindUserByIdServiceTest {
         UserDto userDto = new UserDto();
         userDto.setId("1234");
         when(userRepository.findById("1234"))
-                .thenReturn(userDto);
+                .thenReturn(Optional.of(userDto));
     }
 
     @Test
     void findById() {
         UserDto expected = new UserDto();
         expected.setId("1234");
-        UserDto userDto = findUserByIdService.findById("1234");
+        UserDto userDto = findUserByIdService.findById("1234").get();
         assertThat(userDto.getId()).isEqualTo(expected.getId());
         verify(userRepository).findById("1234");
     }

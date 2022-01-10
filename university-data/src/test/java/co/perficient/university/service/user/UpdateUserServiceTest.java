@@ -4,6 +4,7 @@ import co.perficient.university.exception.NullEntityException;
 import co.perficient.university.model.User;
 import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.port.UserRepository;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,8 +41,8 @@ class UpdateUserServiceTest {
         userDto.setEmail(newUser.getEmail());
 
         when(userRepository.update("123", newUser))
-                .thenReturn(userDto);
-        when(userRepository.findById("123")).thenReturn(userDto);
+                .thenReturn(Optional.of(userDto));
+        when(userRepository.findById("123")).thenReturn(Optional.of(userDto));
     }
 
     @Test
@@ -58,7 +59,7 @@ class UpdateUserServiceTest {
         expected.setFirstName("Megan");
         expected.setEmail("megan@gmail.com");
 
-        UserDto updated = updateUserService.update("123", newUser);
+        UserDto updated = updateUserService.update("123", newUser).get();
         assertThat(updated).isEqualTo(expected);
         verify(userRepository).update("123", newUser);
     }

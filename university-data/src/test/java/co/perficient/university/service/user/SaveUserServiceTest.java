@@ -5,6 +5,7 @@ import co.perficient.university.model.Role;
 import co.perficient.university.model.User;
 import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.port.UserRepository;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,7 +46,7 @@ class SaveUserServiceTest {
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setEmail(user.getEmail());
-        when(userRepository.save(user)).thenReturn(userDto);
+        when(userRepository.save(user)).thenReturn(Optional.of(userDto));
     }
 
     @Test
@@ -58,7 +59,7 @@ class SaveUserServiceTest {
                 "123",
                 Role.VIEWER,
                 new ArrayList<>());
-        UserDto savedOne = saveUserService.save(user);
+        UserDto savedOne = saveUserService.save(user).get();
         UserDto expected = new UserDto();
         expected.setId(user.getId());
         expected.setFirstName(user.getFirstName());
@@ -81,7 +82,7 @@ class SaveUserServiceTest {
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setEmail(user.getEmail());
-        when(userRepository.findById("123")).thenReturn(userDto);
+        when(userRepository.findById("123")).thenReturn(Optional.of(userDto));
     }
 
     @Test
