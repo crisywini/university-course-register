@@ -1,6 +1,7 @@
 package co.perficient.university.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 
+@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
 @NoArgsConstructor

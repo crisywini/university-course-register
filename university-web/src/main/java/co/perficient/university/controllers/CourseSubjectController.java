@@ -7,6 +7,7 @@ import co.perficient.university.exception.RepeatedEntityException;
 import co.perficient.university.model.CourseSubject;
 import co.perficient.university.model.Methodology;
 import co.perficient.university.model.dto.CourseSubjectDto;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class CourseSubjectController {
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity<?> save(@RequestBody CourseSubject courseSubject) {
-        CourseSubjectDto saved;
+        Optional<CourseSubjectDto> saved;
         try {
             saved = courseSubjectApplicationService.save(courseSubject);
         } catch (RepeatedEntityException | NullEntityException e) {
@@ -34,7 +35,7 @@ public class CourseSubjectController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CourseSubjectDto> findById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<Optional<CourseSubjectDto>> findById(@PathVariable(name = "id") Long id) {
         return new ResponseEntity<>(courseSubjectApplicationService.findById(id), HttpStatus.OK);
     }
 
@@ -65,10 +66,10 @@ public class CourseSubjectController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public ResponseEntity<?> update(@PathVariable Long id,
                                     @RequestBody CourseSubject courseSubject) {
-        CourseSubjectDto updated;
+        Optional<CourseSubjectDto> updated;
         try {
             updated = courseSubjectApplicationService.update(id, courseSubject);
         } catch (NullEntityException e) {

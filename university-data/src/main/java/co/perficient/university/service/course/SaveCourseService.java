@@ -8,11 +8,13 @@ import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 @RequiredArgsConstructor
 @Service
 public class SaveCourseService {
 
     private final CourseRepository courseRepository;
+
     private static final String COURSE_REPEATED_MESSAGE = "The course already exists!";
 
 
@@ -22,8 +24,8 @@ public class SaveCourseService {
     }
 
     private void validateNonRepeated(Course course) {
-        Objects.requireNonNull(course.getId());
-        if (courseRepository.findById(course.getId()).isPresent()) {
+        Long id = Objects.requireNonNull(course.getId());
+        if (courseRepository.findById(id).isPresent()) {
             throw new RepeatedEntityException(COURSE_REPEATED_MESSAGE);
         }
     }
