@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class FindCourseSubjectByIdService {
 
-    private final CourseSubjectRepository courseSubjectService;
+    private final CourseSubjectRepository courseSubjectRepository;
 
 
     public Optional<CourseSubjectDto> findById(Long id) {
-        return courseSubjectService.findById(id);
+        return courseSubjectRepository.findById(id);
     }
 }
