@@ -37,11 +37,11 @@ class UpdateCourseServiceTest {
     void update_givenExistingCourse_shouldCallAService() {
         // Given
         Long id = 1L;
-        CourseDto courseDto = CourseDto.builder().id(id).name("Machine Learning").build();
+        Course course = Course.builder().id(id).name("Machine Learning").build();
         Course newCourse = Course.builder().id(id).name("Knowledge Discovery in Databases").build();
-        given(courseRepository.findById(id)).willReturn(Optional.of(courseDto));
+        given(courseRepository.findById(id)).willReturn(Optional.of(course));
         // When
-        Optional<CourseDto> updateCourse = updateCourseService.update(id, newCourse);
+        Optional<Course> updateCourse = updateCourseService.update(id, newCourse);
         // Then
         Assertions.assertNotNull(updateCourse);
         verify(courseRepository, times(1)).update(id, newCourse);

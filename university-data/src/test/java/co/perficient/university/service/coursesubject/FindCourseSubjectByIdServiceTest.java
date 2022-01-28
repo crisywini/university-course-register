@@ -1,6 +1,6 @@
 package co.perficient.university.service.coursesubject;
 
-import co.perficient.university.model.dto.CourseSubjectDto;
+import co.perficient.university.model.CourseSubject;
 import co.perficient.university.port.CourseSubjectRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
@@ -11,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -34,12 +33,12 @@ class FindCourseSubjectByIdServiceTest {
     void findById_givenExistingId_shouldCallAService() {
         // Given
         Long id = 1L;
-        CourseSubjectDto courseSubjectDto = CourseSubjectDto.builder().id(id).build();
-        given(courseSubjectRepository.findById(id)).willReturn(Optional.of(courseSubjectDto));
+        CourseSubject courseSubject = CourseSubject.builder().id(id).build();
+        given(courseSubjectRepository.findById(id)).willReturn(Optional.of(courseSubject));
         // When
-        Optional<CourseSubjectDto> byId = findCourseSubjectByIdService.findById(id);
+        Optional<CourseSubject> byId = findCourseSubjectByIdService.findById(id);
         // Then
-        Assertions.assertEquals(Optional.of(courseSubjectDto), byId);
+        Assertions.assertEquals(Optional.of(courseSubject), byId);
         verify(courseSubjectRepository, times(1)).findById(id);
     }
 
@@ -49,7 +48,7 @@ class FindCourseSubjectByIdServiceTest {
         Long id = 2L;
         given(courseSubjectRepository.findById(id)).willReturn(Optional.empty());
         // When
-        Optional<CourseSubjectDto> byId = findCourseSubjectByIdService.findById(id);
+        Optional<CourseSubject> byId = findCourseSubjectByIdService.findById(id);
         // Then
         Assertions.assertEquals(Optional.empty(), byId);
         verify(courseSubjectRepository, times(1)).findById(id);

@@ -2,10 +2,8 @@ package co.perficient.university.service.coursesubject;
 
 import co.perficient.university.exception.NullEntityException;
 import co.perficient.university.model.CourseSubject;
-import co.perficient.university.model.dto.CourseSubjectDto;
 import co.perficient.university.port.CourseSubjectRepository;
 import java.util.Optional;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,13 +49,12 @@ class DeleteCourseSubjectServiceTest {
     void delete_givenExistingCourse_shouldCallAService() {
         // Given
         CourseSubject courseSubject = CourseSubject.builder().id(1L).build();
-        CourseSubjectDto courseSubjectDto = CourseSubjectDto.builder().id(courseSubject.getId()).build();
-        given(courseSubjectRepository.findById(1L)).willReturn(Optional.of(courseSubjectDto));
+        given(courseSubjectRepository.findById(1L)).willReturn(Optional.of(courseSubject));
         // When
         deleteCourseSubjectService.delete(courseSubject);
         // Then
         verify(courseSubjectRepository, times(1)).delete(courseSubject);
-        verify(courseSubjectRepository, times(1)).findById(courseSubjectDto.getId());
+        verify(courseSubjectRepository, times(1)).findById(courseSubject.getId());
     }
 
 }

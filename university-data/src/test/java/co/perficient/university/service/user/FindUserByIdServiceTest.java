@@ -1,5 +1,6 @@
 package co.perficient.university.service.user;
 
+import co.perficient.university.model.User;
 import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.port.UserRepository;
 import java.util.Optional;
@@ -25,18 +26,17 @@ class FindUserByIdServiceTest {
     void setUp() {
         userRepository = Mockito.mock(UserRepository.class);
         findUserByIdService = new FindUserByIdService(userRepository);
-        UserDto userDto = new UserDto();
-        userDto.setId("1234");
+        User user = User.builder().id("1234").build();
         when(userRepository.findById("1234"))
-                .thenReturn(Optional.of(userDto));
+                .thenReturn(Optional.of(user));
     }
 
     @Test
     void findById() {
         UserDto expected = new UserDto();
         expected.setId("1234");
-        UserDto userDto = findUserByIdService.findById("1234").get();
-        assertThat(userDto.getId()).isEqualTo(expected.getId());
+        User user = findUserByIdService.findById("1234").get();
+        assertThat(user.getId()).isEqualTo(expected.getId());
         verify(userRepository).findById("1234");
     }
 }

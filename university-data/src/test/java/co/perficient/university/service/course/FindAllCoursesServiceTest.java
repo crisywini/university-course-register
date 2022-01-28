@@ -1,6 +1,6 @@
 package co.perficient.university.service.course;
 
-import co.perficient.university.model.dto.CourseDto;
+import co.perficient.university.model.Course;
 import co.perficient.university.port.CourseRepository;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,7 +35,7 @@ class FindAllCoursesServiceTest {
         // Given
         given(courseRepository.findAll()).willReturn(new HashSet<>());
         // When
-        Set<CourseDto> all = findAllCoursesService.findAll();
+        Set<Course> all = findAllCoursesService.findAll();
         // Then
         Assertions.assertEquals(0, all.size());
         verify(courseRepository, times(1)).findAll();

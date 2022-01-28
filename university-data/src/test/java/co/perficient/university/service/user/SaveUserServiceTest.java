@@ -41,12 +41,7 @@ class SaveUserServiceTest {
                 "123",
                 Role.VIEWER,
                 new ArrayList<>());
-        UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
-        userDto.setFirstName(user.getFirstName());
-        userDto.setLastName(user.getLastName());
-        userDto.setEmail(user.getEmail());
-        when(userRepository.save(user)).thenReturn(Optional.of(userDto));
+        when(userRepository.save(user)).thenReturn(Optional.of(user));
     }
 
     @Test
@@ -59,8 +54,8 @@ class SaveUserServiceTest {
                 "123",
                 Role.VIEWER,
                 new ArrayList<>());
-        UserDto savedOne = saveUserService.save(user).get();
-        UserDto expected = new UserDto();
+        User savedOne = saveUserService.save(user).get();
+        User expected = new User();
         expected.setId(user.getId());
         expected.setFirstName(user.getFirstName());
         expected.setLastName(user.getLastName());
@@ -77,12 +72,7 @@ class SaveUserServiceTest {
                 "123",
                 Role.VIEWER,
                 new ArrayList<>());
-        UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
-        userDto.setFirstName(user.getFirstName());
-        userDto.setLastName(user.getLastName());
-        userDto.setEmail(user.getEmail());
-        when(userRepository.findById("123")).thenReturn(Optional.of(userDto));
+        when(userRepository.findById("123")).thenReturn(Optional.of(user));
     }
 
     @Test

@@ -1,6 +1,7 @@
 package co.perficient.university.service.coursesubject;
 
 import co.perficient.university.exception.NullEntityException;
+import co.perficient.university.model.Course;
 import co.perficient.university.model.dto.CourseDto;
 import co.perficient.university.model.dto.CourseSubjectDto;
 import co.perficient.university.port.CourseRepository;
@@ -43,9 +44,8 @@ class FindCourseSubjectByCourseServiceTest {
     void findByCourse_givenExistingCourseId_shouldCallAService() {
         // Given
         Long courseId = 1L;
-        CourseDto courseDto = CourseDto.builder().id(courseId).build();
         List<CourseSubjectDto> courseSubjectDtoList = List.of(CourseSubjectDto.builder().id(1L).build());
-        given(courseRepository.findById(courseId)).willReturn(Optional.of(courseDto));
+        given(courseRepository.findById(courseId)).willReturn(Optional.of(Course.builder().id(courseId).build()));
         given(courseSubjectRepository.findByCourse(courseId)).willReturn(courseSubjectDtoList);
         // When
         List<CourseSubjectDto> byCourse = findCourseSubjectByCourseService.findByCourse(courseId);

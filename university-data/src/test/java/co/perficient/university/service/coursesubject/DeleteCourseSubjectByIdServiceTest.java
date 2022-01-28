@@ -36,7 +36,7 @@ class DeleteCourseSubjectByIdServiceTest {
     @Test
     void deleteById_givenExistingId_shouldCallAService() {
         // Given
-        given(courseSubjectRepository.findById(anyLong())).willReturn(Optional.of(CourseSubjectDto.builder().id(1L).build()));
+        given(courseSubjectRepository.findById(anyLong())).willReturn(Optional.of(CourseSubject.builder().id(1L).build()));
         // When
         deleteCourseSubjectByIdService.deleteById(anyLong());
         // Then

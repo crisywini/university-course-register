@@ -61,11 +61,7 @@ class DeleteCoursesServiceTest {
                 .modality(Modality.FACE_TO_FACE)
                 .name("Data Visualization")
                 .build();
-        Optional<CourseDto> courseDto = Optional.of(course).map(c -> CourseDto.builder().id(c.getId())
-                .academicLevel(c.getAcademicLevel())
-                .modality(c.getModality())
-                .name(c.getName()).build());
-        given(courseRepository.findById(1L)).willReturn(courseDto);
+        given(courseRepository.findById(1L)).willReturn(Optional.of(course));
         // When
         deleteCoursesService.delete(course);
         // Then

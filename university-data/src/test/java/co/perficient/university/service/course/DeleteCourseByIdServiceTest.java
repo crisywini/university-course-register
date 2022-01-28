@@ -41,9 +41,7 @@ class DeleteCourseByIdServiceTest {
         Course course = Course.builder().id(1L).build();
         // When
         given(courseRepository.findById(1L))
-                .willReturn(Optional.of(CourseDto.builder()
-                        .id(course.getId())
-                        .build()));
+                .willReturn(Optional.of(course));
         // Then
         deleteCourseByIdService.deleteById(1L);
 

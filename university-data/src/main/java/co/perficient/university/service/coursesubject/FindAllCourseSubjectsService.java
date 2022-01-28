@@ -1,6 +1,6 @@
 package co.perficient.university.service.coursesubject;
 
-import co.perficient.university.model.dto.CourseSubjectDto;
+import co.perficient.university.model.CourseSubject;
 import co.perficient.university.port.CourseSubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,8 +13,7 @@ public class FindAllCourseSubjectsService {
 
     private final CourseSubjectRepository courseSubjectService;
 
-
-    public Set<CourseSubjectDto> findAll() {
+    public Set<CourseSubject> findAll() {
         return courseSubjectService.findAll();
     }
 

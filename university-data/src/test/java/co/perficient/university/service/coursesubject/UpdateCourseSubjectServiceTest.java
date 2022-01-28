@@ -2,7 +2,6 @@ package co.perficient.university.service.coursesubject;
 
 import co.perficient.university.exception.NullEntityException;
 import co.perficient.university.model.CourseSubject;
-import co.perficient.university.model.dto.CourseSubjectDto;
 import co.perficient.university.port.CourseSubjectRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
@@ -13,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -36,15 +34,15 @@ class UpdateCourseSubjectServiceTest {
     void update_givenExistingId_shouldCallAService() {
         // Given
         Long id = 1L;
-        CourseSubjectDto courseSubjectDto = CourseSubjectDto.builder().id(id).name("Machine Learning").build();
+        CourseSubject courseSubjectDto = CourseSubject.builder().id(id).name("Machine Learning").build();
         String newName = "Knowledge Discovery in Databases";
         CourseSubject newCourseSubject = CourseSubject.builder().id(id).name(newName).build();
         given(courseSubjectRepository.findById(id)).willReturn(Optional.of(courseSubjectDto));
-        CourseSubjectDto updatedCourseSubjectDto = CourseSubjectDto.builder().id(courseSubjectDto.getId())
+        CourseSubject updatedCourseSubjectDto = CourseSubject.builder().id(courseSubjectDto.getId())
                 .name(newCourseSubject.getName()).build();
         given(courseSubjectRepository.update(id, newCourseSubject)).willReturn(Optional.of(updatedCourseSubjectDto));
         // When
-        Optional<CourseSubjectDto> updatedCourse = updateCourseSubjectService.update(id, newCourseSubject);
+        Optional<CourseSubject> updatedCourse = updateCourseSubjectService.update(id, newCourseSubject);
         Assertions.assertTrue(updatedCourse.isPresent());
         Assertions.assertEquals(newName, updatedCourse.get().getName());
         verify(courseSubjectRepository, times(1)).findById(id);
