@@ -4,7 +4,6 @@ import co.perficient.university.exception.NullEntityException;
 import co.perficient.university.exception.RepeatedEntityException;
 import co.perficient.university.model.Course;
 import co.perficient.university.model.CourseSubject;
-import co.perficient.university.model.dto.CourseSubjectDto;
 import co.perficient.university.port.CourseRepository;
 import co.perficient.university.port.CourseSubjectRepository;
 import java.util.Objects;
@@ -21,7 +20,7 @@ public class SaveCourseSubjectService {
     private static final String COURSE_SUBJECT_REPEATED_MESSAGE = "The course subject already exists!";
     private static final String COURSE_NON_EXISTING_MESSAGE = "The course does not exists!";
 
-    public Optional<CourseSubjectDto> save(CourseSubject courseSubject) {
+    public Optional<CourseSubject> save(CourseSubject courseSubject) {
         validateNonRepeated(courseSubject);
         validateExistingCourse(courseSubject.getCourse());
         return courseSubjectService.save(courseSubject);

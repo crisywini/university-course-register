@@ -1,7 +1,6 @@
 package co.perficient.university.adapter;
 
 import co.perficient.university.adapter.jparepositories.UserJPARepository;
-import co.perficient.university.exception.NullEntityException;
 import co.perficient.university.model.Role;
 import co.perficient.university.model.User;
 import co.perficient.university.model.dto.UserDto;
@@ -18,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -39,37 +37,19 @@ public class UserRepositoryImpl implements UserRepository, UserDetailsService {
     }
 
     @Override
-    public Set<UserDto> findAll() {
-        return userJPARepository.findAll()
-                .stream()
-                .map(u -> new UserDto(u.getId(), u.getEmail(), u.getFirstName(), u.getLastName()))
-                .collect(Collectors.toSet());
+    public Set<User> findAll() {
+        return new HashSet<>(userJPARepository.findAll());
     }
 
     @Override
-    public Optional<UserDto> findById(String id) {
-        UserDto userDto = userJPARepository.findById(id).map(u -> UserDto.builder()
-                        .id(u.getId())
-                        .lastName(u.getLastName())
-                        .email(u.getEmail())
-                        .firstName(u.getFirstName())
-                        .build())
-                .orElseThrow(() -> new NullEntityException("User not found"));
-
-        return Optional.of(userDto);
+    public Optional<User> findById(String id) {
+        return userJPARepository.findById(id);
     }
 
     @Override
-    public Optional<UserDto> save(User object) {
+    public Optional<User> save(User object) {
         object.setPassword(passwordEncoder.encode(object.getPassword()));
-        User user = userJPARepository.save(object);
-
-        return Optional.of(UserDto.builder()
-                .id(user.getId())
-                .email(user.getEmail())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .build());
+        return Optional.of(userJPARepository.save(object));
     }
 
     @Override
@@ -83,16 +63,8 @@ public class UserRepositoryImpl implements UserRepository, UserDetailsService {
     }
 
     @Override
-    public Optional<UserDto> update(String id, User newEntity) {
-        return userJPARepository.findById(id).map(s -> {
-            User save = userJPARepository.save(s.updateWith(newEntity));
-            return UserDto.builder()
-                    .id(save.getId())
-                    .email(save.getEmail())
-                    .firstName(save.getFirstName())
-                    .lastName(save.getLastName())
-                    .build();
-        });
+    public Optional<User> update(String id, User newEntity) {
+        return userJPARepository.findById(id).map(s -> userJPARepository.save(s.updateWith(newEntity)));
     }
 
     @Override

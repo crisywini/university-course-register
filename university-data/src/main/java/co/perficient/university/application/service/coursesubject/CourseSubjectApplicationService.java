@@ -34,7 +34,7 @@ public class CourseSubjectApplicationService {
 
     val updateCourseSubjectService;
 
-    public Optional<CourseSubjectDto> save(CourseSubject courseSubject) {
+    public Optional<CourseSubject> save(CourseSubject courseSubject) {
         return ((SaveCourseSubjectService) saveCourseSubjectService).save(courseSubject);
     }
 
@@ -54,7 +54,7 @@ public class CourseSubjectApplicationService {
         return ((FindCourseSubjectByCourseService) findCourseSubjectByCourseService).findByCourse(courseId);
     }
 
-    public Optional<CourseSubjectDto> findById(Long id) {
+    public Optional<CourseSubject> findById(Long id) {
         return ((FindCourseSubjectByIdService) findCourseSubjectByIdService).findById(id);
     }
 
@@ -67,7 +67,7 @@ public class CourseSubjectApplicationService {
         return ((FindCourseSubjectByNameService) findCourseSubjectByNameService).findByName(name);
     }
 
-    public Optional<CourseSubjectDto> update(Long id, CourseSubject courseSubject) {
+    public Optional<CourseSubject> update(Long id, CourseSubject courseSubject) {
         return ((UpdateCourseSubjectService) updateCourseSubjectService).update(id, courseSubject);
     }
 

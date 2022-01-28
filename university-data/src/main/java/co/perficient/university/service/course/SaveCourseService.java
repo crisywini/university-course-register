@@ -18,7 +18,7 @@ public class SaveCourseService {
     private static final String COURSE_REPEATED_MESSAGE = "The course already exists!";
 
 
-    public Optional<CourseDto> save(Course course) {
+    public Optional<Course> save(Course course) {
         validateNonRepeated(course);
         return courseRepository.save(course);
     }

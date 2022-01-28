@@ -15,7 +15,7 @@ public class UpdateCourseSubjectService {
 
     private static final String NON_EXISTING_COURSE_SUBJECT_MESSAGE = "The course subject cannot be updated because, does not exists!";
 
-    public Optional<CourseSubjectDto> update(Long id, CourseSubject newCourseSubject) {
+    public Optional<CourseSubject> update(Long id, CourseSubject newCourseSubject) {
         validateCourseSubjectExisting(id);
         return courseSubjectRepository.update(id, newCourseSubject);
     }

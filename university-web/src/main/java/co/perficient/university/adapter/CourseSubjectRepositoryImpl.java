@@ -5,6 +5,7 @@ import co.perficient.university.model.CourseSubject;
 import co.perficient.university.model.Methodology;
 import co.perficient.university.model.dto.CourseSubjectDto;
 import co.perficient.university.port.CourseSubjectRepository;
+import java.util.HashSet;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,36 +23,19 @@ public class CourseSubjectRepositoryImpl implements CourseSubjectRepository {
     }
 
     @Override
-    public Set<CourseSubjectDto> findAll() {
-        return courseSubjectJPARepository
-                .findAll()
-                .stream()
-                .map(x -> new CourseSubjectDto(x.getId(),
-                        x.getDescription(),
-                        x.getName(),
-                        x.getMethodology()))
-                .collect(Collectors.toSet());
+    public Set<CourseSubject> findAll() {
+        return new HashSet<>(courseSubjectJPARepository
+                .findAll());
     }
 
     @Override
-    public Optional<CourseSubjectDto> findById(Long id) {
-        return courseSubjectJPARepository.findById(id)
-                .map(c -> CourseSubjectDto.builder()
-                        .id(c.getId())
-                        .description(c.getDescription())
-                        .name(c.getName())
-                        .methodology(c.getMethodology())
-                        .build());
+    public Optional<CourseSubject> findById(Long id) {
+        return courseSubjectJPARepository.findById(id);
     }
 
     @Override
-    public Optional<CourseSubjectDto> save(CourseSubject object) {
-        return Optional.of(courseSubjectJPARepository.save(object)).map(c -> CourseSubjectDto.builder()
-                .id(c.getId())
-                .description(c.getDescription())
-                .name(c.getName())
-                .methodology(c.getMethodology())
-                .build());
+    public Optional<CourseSubject> save(CourseSubject object) {
+        return Optional.of(courseSubjectJPARepository.save(object));
     }
 
     @Override
@@ -65,16 +49,9 @@ public class CourseSubjectRepositoryImpl implements CourseSubjectRepository {
     }
 
     @Override
-    public Optional<CourseSubjectDto> update(Long id, CourseSubject newEntity) {
-        return courseSubjectJPARepository.findById(id).map(subject -> {
-            CourseSubject c = courseSubjectJPARepository.save(subject.updateWith(newEntity));
-            return CourseSubjectDto.builder()
-                    .id(c.getId())
-                    .description(c.getDescription())
-                    .name(c.getName())
-                    .methodology(c.getMethodology())
-                    .build();
-        });
+    public Optional<CourseSubject> update(Long id, CourseSubject newEntity) {
+        return courseSubjectJPARepository.findById(id)
+                .map(subject -> courseSubjectJPARepository.save(subject.updateWith(newEntity)));
     }
 
     @Override

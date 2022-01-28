@@ -7,7 +7,9 @@ import co.perficient.university.exception.RepeatedEntityException;
 import co.perficient.university.model.Role;
 import co.perficient.university.model.User;
 import co.perficient.university.model.dto.UserDto;
+import co.perficient.university.model.mapper.UserMapper;
 import co.perficient.university.util.Util;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +26,14 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserApplicationService userApplicationService;
-
+    private final UserMapper userMapper;
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity<?> save(@RequestBody User user) {
 
         Optional<UserDto> saved;
         try {
-            saved = userApplicationService.save(user);
+            saved = userApplicationService.save(user).map(userMapper::userToUserDto);
         } catch (RepeatedEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
@@ -40,12 +42,15 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Set<UserDto>> findAll() {
-        return new ResponseEntity<>(userApplicationService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(userApplicationService.findAll().stream()
+                .map(userMapper::userToUserDto)
+                .collect(Collectors.toSet()), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<UserDto>> findById(@PathVariable(name = "id") String id) {
-        return new ResponseEntity<>(userApplicationService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(userApplicationService.findById(id)
+                .map(userMapper::userToUserDto), HttpStatus.OK);
     }
 
     @GetMapping("/name/{name}")
@@ -92,7 +97,7 @@ public class UserController {
                                     @RequestBody User newUser) {
         Optional<UserDto> updated;
         try {
-            updated = userApplicationService.update(id, newUser);
+            updated = userApplicationService.update(id, newUser).map(userMapper::userToUserDto);
         } catch (NullEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

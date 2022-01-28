@@ -1,6 +1,7 @@
 package co.perficient.university.service.user;
 
 
+import co.perficient.university.model.User;
 import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.port.UserRepository;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class FindAllUsersService {
         this.userService = userService;
     }
 
-    public Set<UserDto> findAll() {
+    public Set<User> findAll() {
         return userService.findAll();
     }
 }

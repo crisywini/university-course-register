@@ -34,7 +34,7 @@ public class UserApplicationService {
 
     val updateUserService;
 
-    public Optional<UserDto> save(User user) {
+    public Optional<User> save(User user) {
         return ((SaveUserService) saveUserService).save(user);
     }
 
@@ -46,7 +46,7 @@ public class UserApplicationService {
         ((DeleteUserByIdService) deleteUserByIdService).deleteById(id);
     }
 
-    public Set<UserDto> findAll() {
+    public Set<User> findAll() {
         return ((FindAllUsersService) findAllUsersService).findAll();
     }
 
@@ -58,7 +58,7 @@ public class UserApplicationService {
         return ((FindUserByFirstNameService) findUserByFirstNameService).findByFirstName(name);
     }
 
-    public Optional<UserDto> findById(String id) {
+    public Optional<User> findById(String id) {
         return ((FindUserByIdService) findUserByIdService).findById(id);
     }
 
@@ -66,7 +66,7 @@ public class UserApplicationService {
         return ((FindUserByRoleService) findUserByRoleService).findByRole(role);
     }
 
-    public Optional<UserDto> update(String id, User user) {
+    public Optional<User> update(String id, User user) {
         return ((UpdateUserService) updateUserService).update(id, user);
     }
 

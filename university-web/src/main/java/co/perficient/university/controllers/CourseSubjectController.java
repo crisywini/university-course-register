@@ -7,6 +7,7 @@ import co.perficient.university.exception.RepeatedEntityException;
 import co.perficient.university.model.CourseSubject;
 import co.perficient.university.model.Methodology;
 import co.perficient.university.model.dto.CourseSubjectDto;
+import co.perficient.university.model.mapper.CourseSubjectMapper;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,13 +22,13 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class CourseSubjectController {
     private final CourseSubjectApplicationService courseSubjectApplicationService;
-
+    private final CourseSubjectMapper courseSubjectMapper;
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity<?> save(@RequestBody CourseSubject courseSubject) {
         Optional<CourseSubjectDto> saved;
         try {
-            saved = courseSubjectApplicationService.save(courseSubject);
+            saved = courseSubjectApplicationService.save(courseSubject).map(courseSubjectMapper::courseSubjectToCourseSubjectDto);
         } catch (RepeatedEntityException | NullEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
@@ -36,7 +37,8 @@ public class CourseSubjectController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<CourseSubjectDto>> findById(@PathVariable(name = "id") Long id) {
-        return new ResponseEntity<>(courseSubjectApplicationService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(courseSubjectApplicationService.findById(id)
+                .map(courseSubjectMapper::courseSubjectToCourseSubjectDto), HttpStatus.OK);
     }
 
     @GetMapping
@@ -71,7 +73,8 @@ public class CourseSubjectController {
                                     @RequestBody CourseSubject courseSubject) {
         Optional<CourseSubjectDto> updated;
         try {
-            updated = courseSubjectApplicationService.update(id, courseSubject);
+            updated = courseSubjectApplicationService.update(id, courseSubject)
+                    .map(courseSubjectMapper::courseSubjectToCourseSubjectDto);
         } catch (NullEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

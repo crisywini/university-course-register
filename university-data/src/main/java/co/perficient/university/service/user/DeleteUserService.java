@@ -16,11 +16,11 @@ public class DeleteUserService {
     }
 
     public void delete(User user) {
-        getIdIfUserExists(user);
+        validateExistingUser(user);
         userService.delete(user);
     }
 
-    private void getIdIfUserExists(User user) {
+    private void validateExistingUser(User user) {
         if (userService.findById(user.getId()).isEmpty()) {
             throw new NullEntityException(NON_EXISTING_USER_MESSAGE);
         }

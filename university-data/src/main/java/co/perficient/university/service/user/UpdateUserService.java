@@ -2,7 +2,6 @@ package co.perficient.university.service.user;
 
 import co.perficient.university.exception.NullEntityException;
 import co.perficient.university.model.User;
-import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.port.UserRepository;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,7 @@ public class UpdateUserService {
         this.userRepository = userRepository;
     }
 
-    public Optional<UserDto> update(String id, User newUser) {
+    public Optional<User> update(String id, User newUser) {
         validateExistingUser(id);
         return userRepository.update(id, newUser);
     }

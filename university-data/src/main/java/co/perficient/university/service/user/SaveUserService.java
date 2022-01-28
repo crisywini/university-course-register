@@ -2,7 +2,6 @@ package co.perficient.university.service.user;
 
 import co.perficient.university.exception.RepeatedEntityException;
 import co.perficient.university.model.User;
-import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.port.UserRepository;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ public class SaveUserService {
         this.userService = userService;
     }
 
-    public Optional<UserDto> save(User user) {
+    public Optional<User> save(User user) {
         validateNonRepeated(user);
         return userService.save(user);
     }

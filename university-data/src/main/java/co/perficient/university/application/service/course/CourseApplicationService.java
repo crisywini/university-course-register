@@ -9,7 +9,6 @@ import co.perficient.university.service.course.*;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Set;
 import lombok.val;
@@ -40,7 +39,7 @@ public class CourseApplicationService {
 
     val updateCourseService;
 
-    public Optional<CourseDto> saveCourse(Course course) {
+    public Optional<Course> saveCourse(Course course) {
         return ((SaveCourseService) saveCourseService).save(course);
     }
 
@@ -52,7 +51,7 @@ public class CourseApplicationService {
         ((DeleteCourseByIdService) deleteCourseByIdService).deleteById(id);
     }
 
-    public Set<CourseDto> findAllCourses() {
+    public Set<Course> findAllCourses() {
         return ((FindAllCoursesService) findAllCoursesService).findAll();
     }
 
@@ -64,7 +63,7 @@ public class CourseApplicationService {
         return ((FindCourseByFacultyService) findCourseByFacultyService).findByFaculty(faculty);
     }
 
-    public Optional<CourseDto> findById(Long id) {
+    public Optional<Course> findById(Long id) {
         return ((FindCourseByIdService) findCourseByIdService).findById(id);
     }
 
@@ -80,7 +79,7 @@ public class CourseApplicationService {
         return ((FindCourseByUserService) findCourseByUserService).findByUser(userId);
     }
 
-    public Optional<CourseDto> update(Long id, Course course) {
+    public Optional<Course> update(Long id, Course course) {
         return ((UpdateCourseService) updateCourseService).update(id, course);
     }
 

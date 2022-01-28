@@ -1,6 +1,7 @@
 package co.perficient.university.service.course;
 
 
+import co.perficient.university.model.Course;
 import co.perficient.university.model.dto.CourseDto;
 import co.perficient.university.port.CourseRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ public class FindAllCoursesService {
 
     private final CourseRepository courseRepository;
 
-    public Set<CourseDto> findAll() {
+    public Set<Course> findAll() {
         return courseRepository.findAll();
     }
 

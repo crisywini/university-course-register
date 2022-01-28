@@ -6,7 +6,9 @@ import co.perficient.university.exception.ParamNotFoundException;
 import co.perficient.university.exception.RepeatedEntityException;
 import co.perficient.university.model.*;
 import co.perficient.university.model.dto.CourseDto;
+import co.perficient.university.model.mapper.CourseMapper;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +23,13 @@ import java.util.Set;
 public class CourseController {
 
     private final CourseApplicationService courseApplicationService;
+    private final CourseMapper courseMapper;
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity<?> save(@RequestBody Course course) {
         Optional<CourseDto> saved;
         try {
-            saved = courseApplicationService.saveCourse(course);
+            saved = courseApplicationService.saveCourse(course).map(courseMapper::courseToCourseDto);
         } catch (RepeatedEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
@@ -35,12 +38,14 @@ public class CourseController {
 
     @GetMapping
     public ResponseEntity<Set<CourseDto>> findAll() {
-        return new ResponseEntity<>(courseApplicationService.findAllCourses(), HttpStatus.OK);
+        return new ResponseEntity<>(courseApplicationService.findAllCourses().stream()
+                .map(courseMapper::courseToCourseDto).collect(Collectors.toSet()), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<CourseDto>> findById(@PathVariable(name = "id") Long id) {
-        return new ResponseEntity<>(courseApplicationService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(courseApplicationService.findById(id)
+                .map(courseMapper::courseToCourseDto), HttpStatus.OK);
     }
 
     @GetMapping("/academic_level/{academic_level}")
@@ -121,7 +126,7 @@ public class CourseController {
                                     @RequestBody Course course) {
         Optional<CourseDto> updated;
         try {
-            updated = courseApplicationService.update(id, course);
+            updated = courseApplicationService.update(id, course).map(courseMapper::courseToCourseDto);
         } catch (NullEntityException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
