@@ -12,64 +12,76 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
+import lombok.val;
 
 @Service
 @RequiredArgsConstructor
 public class CourseApplicationService {
-    private final SaveCourseService saveCourseService;
-    private final DeleteCoursesService deleteCoursesService;
-    private final DeleteCourseByIdService deleteCourseByIdService;
-    private final FindAllCoursesService findAllCoursesService;
-    private final FindCourseByAcademicLevelService findCourseByAcademicLevelService;
-    private final FindCourseByFacultyService findCourseByFacultyService;
-    private final FindCourseByIdService findCourseByIdService;
-    private final FindCourseByModalityService findCourseByModalityService;
-    private final FindCourseByNameService findCourseByNameService;
-    private final FindCourseByUserService findCourseByUserService;
-    private final UpdateCourseService updateCourseService;
+
+    val saveCourseService;
+
+    val deleteCoursesService;
+
+    val deleteCourseByIdService;
+
+    val findAllCoursesService;
+
+    val findCourseByAcademicLevelService;
+
+    val findCourseByFacultyService;
+
+    val findCourseByIdService;
+
+    val findCourseByModalityService;
+
+    val findCourseByNameService;
+
+    val findCourseByUserService;
+
+    val updateCourseService;
 
     public Optional<CourseDto> saveCourse(Course course) {
-        return saveCourseService.save(course);
+        return ((SaveCourseService) saveCourseService).save(course);
     }
 
     public void deleteCourse(Course course) {
-        deleteCoursesService.delete(course);
+        ((DeleteCoursesService) deleteCoursesService).delete(course);
     }
 
     public void deleteCourseById(Long id) {
-        deleteCourseByIdService.deleteById(id);
+        ((DeleteCourseByIdService) deleteCourseByIdService).deleteById(id);
     }
 
     public Set<CourseDto> findAllCourses() {
-        return findAllCoursesService.findAll();
+        return ((FindAllCoursesService) findAllCoursesService).findAll();
     }
 
     public List<CourseDto> findByAcademicLevel(AcademicLevel academicLevel) {
-        return findCourseByAcademicLevelService.findByAcademicLevel(academicLevel);
+        return ((FindCourseByAcademicLevelService) findCourseByAcademicLevelService).findByAcademicLevel(academicLevel);
     }
 
     public List<CourseDto> findByFaculty(Faculty faculty) {
-        return findCourseByFacultyService.findByFaculty(faculty);
+        return ((FindCourseByFacultyService) findCourseByFacultyService).findByFaculty(faculty);
     }
 
     public Optional<CourseDto> findById(Long id) {
-        return findCourseByIdService.findById(id);
+        return ((FindCourseByIdService) findCourseByIdService).findById(id);
     }
 
     public List<CourseDto> findByModality(Modality modality) {
-        return findCourseByModalityService.findByModality(modality);
+        return ((FindCourseByModalityService) findCourseByModalityService).findByModality(modality);
     }
 
     public List<CourseDto> findByName(String name) {
-        return findCourseByNameService.findByName(name);
+        return ((FindCourseByNameService) findCourseByNameService).findByName(name);
     }
 
     public List<CourseDto> findByUser(String userId) {
-        return findCourseByUserService.findByUser(userId);
+        return ((FindCourseByUserService) findCourseByUserService).findByUser(userId);
     }
 
     public Optional<CourseDto> update(Long id, Course course) {
-        return updateCourseService.update(id, course);
+        return ((UpdateCourseService) updateCourseService).update(id, course);
     }
 
 

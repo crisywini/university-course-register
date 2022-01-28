@@ -6,6 +6,7 @@ import co.perficient.university.model.dto.UserDto;
 import co.perficient.university.service.user.*;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,50 +15,59 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class UserApplicationService {
-    private final DeleteUserByIdService deleteUserByIdService;
-    private final DeleteUserService deleteUserService;
-    private final FindAllUsersService findAllUsersService;
-    private final FindUserByEmailService findUserByEmailService;
-    private final FindUserByFirstNameService findUserByFirstNameService;
-    private final FindUserByIdService findUserByIdService;
-    private final FindUserByRoleService findUserByRoleService;
-    private final SaveUserService saveUserService;
-    private final UpdateUserService updateUserService;
+
+    val deleteUserByIdService;
+
+    val deleteUserService;
+
+    val findAllUsersService;
+
+    val findUserByEmailService;
+
+    val findUserByFirstNameService;
+
+    val findUserByIdService;
+
+    val findUserByRoleService;
+
+    val saveUserService;
+
+    val updateUserService;
 
     public Optional<UserDto> save(User user) {
-        return saveUserService.save(user);
+        return ((SaveUserService) saveUserService).save(user);
     }
 
     public void delete(User user) {
-        deleteUserService.delete(user);
+        ((DeleteUserService) deleteUserService).delete(user);
     }
 
     public void deleteById(String id) {
-        deleteUserByIdService.deleteById(id);
+        ((DeleteUserByIdService) deleteUserByIdService).deleteById(id);
     }
 
     public Set<UserDto> findAll() {
-        return findAllUsersService.findAll();
+        return ((FindAllUsersService) findAllUsersService).findAll();
     }
 
     public Optional<User> findByEmail(String email) {
-        return findUserByEmailService.findByEmail(email);
+        return ((FindUserByEmailService) findUserByEmailService).findByEmail(email);
     }
 
     public List<UserDto> findByFirstName(String name) {
-        return findUserByFirstNameService.findByFirstName(name);
+        return ((FindUserByFirstNameService) findUserByFirstNameService).findByFirstName(name);
     }
 
     public Optional<UserDto> findById(String id) {
-        return findUserByIdService.findById(id);
+        return ((FindUserByIdService) findUserByIdService).findById(id);
     }
 
     public List<UserDto> findByRole(Role role) {
-        return findUserByRoleService.findByRole(role);
+        return ((FindUserByRoleService) findUserByRoleService).findByRole(role);
     }
 
     public Optional<UserDto> update(String id, User user) {
-        return updateUserService.update(id, user);
+        return ((UpdateUserService) updateUserService).update(id, user);
     }
 
 
