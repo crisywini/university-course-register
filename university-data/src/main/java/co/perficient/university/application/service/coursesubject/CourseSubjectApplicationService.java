@@ -46,7 +46,7 @@ public class CourseSubjectApplicationService {
         ((DeleteCourseSubjectByIdService) deleteCourseSubjectByIdService).deleteById(id);
     }
 
-    public Set<CourseSubjectDto> findAll() {
+    public Set<CourseSubject> findAll() {
         return ((FindAllCourseSubjectsService) findAllCourseSubjectsService).findAll();
     }
 

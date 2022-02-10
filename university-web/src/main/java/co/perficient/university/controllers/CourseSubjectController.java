@@ -9,6 +9,7 @@ import co.perficient.university.model.Methodology;
 import co.perficient.university.model.dto.CourseSubjectDto;
 import co.perficient.university.model.mapper.CourseSubjectMapper;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,10 @@ public class CourseSubjectController {
 
     @GetMapping
     public ResponseEntity<Set<CourseSubjectDto>> findAll() {
-        return new ResponseEntity<>(courseSubjectApplicationService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(courseSubjectApplicationService.findAll()
+                .stream()
+                .map(courseSubjectMapper::courseSubjectToCourseSubjectDto).collect(
+                Collectors.toSet()), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
