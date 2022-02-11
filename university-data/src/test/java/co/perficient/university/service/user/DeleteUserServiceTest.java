@@ -12,6 +12,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -38,7 +40,7 @@ class DeleteUserServiceTest {
                 .build();
         when(userRepository.findById("123")).thenReturn(Optional.of(user));
         User user2 = new User();
-        user.setId("123");
+        user2.setId("123");
         deleteUserService.delete(user2);
         verify(userRepository).delete(user2);
     }
@@ -47,7 +49,7 @@ class DeleteUserServiceTest {
 
         assertThrows(NullEntityException.class, () -> {
             User user = new User();
-            user.setId("123");
+            user.setId("1234");
             deleteUserService.delete(user);
         });
     }
