@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/crisywini/university-course-register/tree/master.svg?style=svg)](https://circleci.com/gh/crisywini/university-course-register/tree/master)
 # University-courses-registrations
 This project allows to manage courses for college students
 # university-course-register
