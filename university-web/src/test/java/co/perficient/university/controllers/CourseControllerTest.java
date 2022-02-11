@@ -39,10 +39,6 @@ class CourseControllerTest {
 
     @Test
     void findAll() throws Exception {
-
-        mockMvc.perform(get("/api/courses"))
-                .andDo(print())
-                .andExpect(status().isOk());
     }
 
     @Test
